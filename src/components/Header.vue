@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header-content">
-      <div class="logo">Landing Page</div>
+      <div class="logo">Landing Page - IDYGS93</div>
       <nav>
         <a href="#welcome">Inicio</a>
         <a href="#contact">Contacto</a>

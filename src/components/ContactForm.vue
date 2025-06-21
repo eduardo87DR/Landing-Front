@@ -3,7 +3,7 @@
     <h2 class="contact-title">Contáctanos</h2>
     <form class="form">
       <div class="form-group">
-        <input type="text" placeholder="Guillermo García" required />
+        <input type="text" placeholder="Guillermo García Canul" required />
         <label>Nombre completo</label>
         <span class="focus-border"></span>
       </div>
@@ -13,9 +13,15 @@
         <label>Correo electrónico</label>
         <span class="focus-border"></span>
       </div>
+
+      <div class="form-group">
+        <input type="tel" placeholder="+52 999 123 4567" required />
+        <label>Teléfono</label>
+        <span class="focus-border"></span>
+      </div>
       
       <div class="form-group textarea-group">
-        <textarea placeholder="Me gustaría información sobre..." rows="5" required></textarea>
+        <textarea placeholder="Me gustaría saber más información sobre..." rows="5" required></textarea>
         <label>Tu mensaje</label>
         <span class="focus-border"></span>
       </div>
