@@ -86,7 +86,7 @@
             </div>
             
             <div class="modal-footer">
-              <button class="modal-button" @click="closeModal">
+              <button class="modal-button" @click="closeModal" >
                 Aceptar
               </button>
             </div>
@@ -102,6 +102,11 @@
           <div class="modal-container privacy-modal">
             <div class="modal-header">
               <h3>Aviso de Privacidad</h3>
+                <button class="close-button" @click="showPrivacyModal = false">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 6L6 18M6 6L18 18" stroke="#0d47a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </div>
             
             <div class="modal-body">
@@ -227,6 +232,40 @@ const closeModal = () => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background-color: rgba(13, 71, 161, 0.1);
+}
+
+.close-button svg {
+  transition: transform 0.2s ease;
+}
+
+.close-button:hover svg {
+  transform: scale(1.1);
+}
+
+/* Ajustes para el header del modal con el nuevo botón */
+.modal-header {
+  position: relative;
+  padding: 1.5rem 3rem 1rem 1.5rem;
+  text-align: center;
+}
 
 .contact {
   padding: 3rem 2rem;
@@ -430,7 +469,7 @@ textarea:focus ~ .focus-border {
 }
 
 .privacy-modal {
-  max-width: 600px;
+  max-width: 1000px;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
@@ -442,13 +481,13 @@ textarea:focus ~ .focus-border {
 }
 
 .privacy-content p {
-  color: #6d6d6d; /* Color más oscuro que el #555 original */
+  color: #000000; /* Color más oscuro que el #555 original */
 }
 
 
 /* Opcional: para los items de lista si necesitas más control */
 .privacy-content li {
-  color: #5369c0;
+  color: #434343;
 }
 
 
@@ -457,7 +496,7 @@ textarea:focus ~ .focus-border {
 }
 
 .privacy-content h4 {
-  color: #0d47a1;
+  color: #000000;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
