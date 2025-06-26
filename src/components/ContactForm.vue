@@ -46,6 +46,18 @@
         <span class="focus-border"></span>
       </div>
       
+      <div class="privacy-checkbox">
+        <input 
+          type="checkbox" 
+          id="privacy-check" 
+          v-model="privacyAccepted" 
+          required
+        />
+        <label for="privacy-check">
+          He leído y acepto el <a href="#" @click.prevent="showPrivacyModal = true">Aviso de Privacidad</a>
+        </label>
+      </div>
+      
       <button type="submit" class="submit-btn" :disabled="isLoading">
         <span v-if="!isLoading">Enviar mensaje</span>
         <span v-else>Enviando...</span>
@@ -56,7 +68,7 @@
     </form>
 
     <!-- Modal de éxito -->
-     <Transition name="modal">
+    <Transition name="modal">
       <div v-if="showSuccessModal" class="modal-mask">
         <div class="modal-wrapper">
           <div class="modal-container">
@@ -82,12 +94,72 @@
         </div>
       </div>
     </Transition>
+
+    <!-- Modal de Aviso de Privacidad -->
+    <Transition name="modal">
+      <div v-if="showPrivacyModal" class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container privacy-modal">
+            <div class="modal-header">
+              <h3>Aviso de Privacidad</h3>
+            </div>
+            
+            <div class="modal-body">
+              <div class="privacy-content">
+                <h4>Responsable del tratamiento de tus datos personales</h4>
+                <p>Landing con domicilio en Localhost es responsable del tratamiento de los datos personales que nos proporciones.</p>
+                
+                <h4>Finalidad del tratamiento</h4>
+                <p>Los datos personales que recabamos serán utilizados para las siguientes finalidades:</p>
+                <ul>
+                  <li>Responder a tus consultas y solicitudes de información</li>
+                  <li>Prestar los servicios que nos hayas solicitado</li>
+                  <li>Mantenerte informado sobre nuestros productos y servicios</li>
+                </ul>
+                
+                <h4>Datos personales que recabamos</h4>
+                <p>Recabamos los siguientes datos personales:</p>
+                <ul>
+                  <li>Nombre completo</li>
+                  <li>Correo electrónico</li>
+                  <li>Número telefónico</li>
+                  <li>Cualquier otra información que nos proporciones en tu mensaje</li>
+                </ul>
+                
+                <h4>Tus derechos</h4>
+                <p>Tienes derecho a:</p>
+                <ul>
+                  <li>Acceder a tus datos personales</li>
+                  <li>Solicitar la rectificación o cancelación de los mismos</li>
+                  <li>Oponerte al tratamiento de tus datos</li>
+                  <li>Revocar tu consentimiento</li>
+                </ul>
+                <p>Para ejercer estos derechos, envía un correo a spixerspi@gmail.com con el asunto "Ejercicio de derechos ARCO".</p>
+                
+                <h4>Cambios al aviso de privacidad</h4>
+                <p>Nos reservamos el derecho de modificar este aviso de privacidad. Cualquier cambio será publicado en nuestro sitio web.</p>
+              </div>
+            </div>
+            
+            <div class="modal-footer">
+              <button class="modal-button" @click="showPrivacyModal = false">
+                Aceptar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
+import { ref, onMounted } from 'vue';
+import { useReCaptcha } from 'vue-recaptcha-v3';
+import apiClient from '../api/apiClient';
+
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
+const recaptchaBadge = ref(null);
 
 const formData = ref({
   nombre_completo: '',
@@ -98,47 +170,51 @@ const formData = ref({
 
 const isLoading = ref(false);
 const showSuccessModal = ref(false);
+const showPrivacyModal = ref(false);
+const privacyAccepted = ref(false);
+
+// Mostrar badge de reCAPTCHA después de cargar
+onMounted(async () => {
+  await recaptchaLoaded();
+  const badge = document.querySelector('.grecaptcha-badge');
+  if (badge) {
+    badge.style.visibility = 'visible';
+  }
+});
 
 const submitForm = async () => {
   try {
     isLoading.value = true;
     showSuccessModal.value = false;
     
-    // Validación de campos requeridos
+    if (!privacyAccepted.value) {
+      throw new Error('Debes aceptar el aviso de privacidad');
+    }
+
+    await recaptchaLoaded();
+    const token = await executeRecaptcha('submit');
+    console.log('reCAPTCHA token:', token);
+
     if (!formData.value.nombre_completo || !formData.value.correo || !formData.value.mensaje) {
       throw new Error('Por favor completa todos los campos requeridos');
     }
 
     const payload = {
-      nombre_completo: formData.value.nombre_completo,
-      correo: formData.value.correo,
-      telefono: formData.value.telefono,
-      mensaje: formData.value.mensaje
+      ...formData.value,
+      recaptchaToken: token
     };
 
-    console.log('Datos enviados:', payload);
-
-    // Envío al servidor
-    const response = await axios.post('http://localhost:3000/formulario/createData', payload);
+    const response = await apiClient.post('/formulario/createData', payload);
     
-    console.log('Respuesta completa del servidor:', response);
-
     if ([200, 201].includes(response.status)) {
-      console.log('Envío exitoso. Datos guardados correctamente.');
       showSuccessModal.value = true;
       formData.value = { nombre_completo: '', correo: '', telefono: '', mensaje: '' };
-    } else {
-      throw new Error(`El servidor respondió con un estado inesperado: ${response.status}`);
+      privacyAccepted.value = false;
     }
     
   } catch (error) {
-    console.error('Error completo:', error);
-    console.error('Detalles del error:', {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status
-    });
-    alert(error.message || 'Error al enviar el formulario');
+    console.error('Submission error:', error);
+    alert(error.response?.data?.message || error.message || 'Error al enviar el formulario');
   } finally {
     isLoading.value = false;
   }
@@ -258,6 +334,32 @@ textarea:focus ~ .focus-border {
   margin-bottom: 0.5rem;
 }
 
+.privacy-checkbox {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.privacy-checkbox input {
+  width: auto;
+  margin-right: 0.8rem;
+}
+
+.privacy-checkbox label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.privacy-checkbox a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.privacy-checkbox a:hover {
+  text-decoration: underline;
+}
+
 .submit-btn {
   display: inline-flex;
   align-items: center;
@@ -325,6 +427,50 @@ textarea:focus ~ .focus-border {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
   overflow: hidden;
+}
+
+.privacy-modal {
+  max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.privacy-modal .modal-body {
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.privacy-content p {
+  color: #6d6d6d; /* Color más oscuro que el #555 original */
+}
+
+
+/* Opcional: para los items de lista si necesitas más control */
+.privacy-content li {
+  color: #5369c0;
+}
+
+
+.privacy-content {
+  text-align: left;
+}
+
+.privacy-content h4 {
+  color: #0d47a1;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.privacy-content p, .privacy-content ul {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.privacy-content ul {
+  padding-left: 1.5rem;
 }
 
 .modal-header {
@@ -405,6 +551,10 @@ textarea:focus ~ .focus-border {
 
   .modal-container {
     width: 95%;
+  }
+  
+  .privacy-modal {
+    max-height: 70vh;
   }
 }
 </style>
