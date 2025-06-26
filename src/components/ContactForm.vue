@@ -87,7 +87,11 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useReCaptcha } from 'vue-recaptcha-v3';
 import axios from 'axios';
+
+// Inicializa reCAPTCHA correctamente
+const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 
 const formData = ref({
   nombre_completo: '',
@@ -104,16 +108,25 @@ const submitForm = async () => {
     isLoading.value = true;
     showSuccessModal.value = false;
     
-    // Validación de campos requeridos
+    // Espera a que reCAPTCHA esté cargado
+    await recaptchaLoaded();
+    
+    // Obtener token de reCAPTCHA
+    const token = await executeRecaptcha('submit');
+    console.log('Token de reCAPTCHA:', token);
+
+    // Validar campos requeridos
     if (!formData.value.nombre_completo || !formData.value.correo || !formData.value.mensaje) {
       throw new Error('Por favor completa todos los campos requeridos');
     }
 
+    // Crear payload con los datos del formulario y el token
     const payload = {
       nombre_completo: formData.value.nombre_completo,
       correo: formData.value.correo,
       telefono: formData.value.telefono,
-      mensaje: formData.value.mensaje
+      mensaje: formData.value.mensaje,
+      recaptchaToken: token
     };
 
     console.log('Datos enviados:', payload);
@@ -121,7 +134,7 @@ const submitForm = async () => {
     // Envío al servidor
     const response = await axios.post('http://localhost:3000/formulario/createData', payload);
     
-    console.log('Respuesta completa del servidor:', response);
+    console.log('Respuesta del servidor:', response);
 
     if ([200, 201].includes(response.status)) {
       console.log('Envío exitoso. Datos guardados correctamente.');
@@ -132,13 +145,8 @@ const submitForm = async () => {
     }
     
   } catch (error) {
-    console.error('Error completo:', error);
-    console.error('Detalles del error:', {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status
-    });
-    alert(error.message || 'Error al enviar el formulario');
+    console.error('Error al enviar el formulario:', error);
+    alert(error.message || 'Error al enviar el formulario. Por favor, inténtalo de nuevo más tarde.');
   } finally {
     isLoading.value = false;
   }
