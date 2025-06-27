@@ -1,73 +1,96 @@
 <template>
   <section class="contact" id="contact">
     <h2 class="contact-title">Contáctanos</h2>
-    <form class="form" @submit.prevent="submitForm">
+    <Form @submit="submitForm"
+    :validation-schema="schema" 
+    v-slot="{ errors, meta }" 
+    class="form">
+
       <div class="form-group">
-        <input 
-          v-model="formData.nombre_completo" 
-          type="text" 
-          placeholder="Guillermo García Canul" 
-          required 
+        <Field
+          name="nombre_completo"
+          type="text"
+          placeholder="Guillermo García Canul"
+          as="input"
+          class="input-field"
+          validate-on-blur
         />
         <label>Nombre completo</label>
         <span class="focus-border"></span>
+        <ErrorMessage name="nombre_completo" class="error-message" />
       </div>
       
       <div class="form-group">
-        <input 
-          v-model="formData.correo" 
-          type="email" 
-          placeholder="guillermo.jesus.garcia.canul@gmail.com" 
-          required 
+        <Field
+          name="correo"
+          type="email"
+          placeholder="guillermo.jesus.garcia.canul@gmail.com"
+          as="input"
+          class="input-field"
+          validate-on-blur
+
         />
         <label>Correo electrónico</label>
         <span class="focus-border"></span>
+        <ErrorMessage name="correo" class="error-message" />
       </div>
-
+      
       <div class="form-group">
-        <input 
-          v-model="formData.telefono" 
-          type="tel" 
-          placeholder="+52 999 123 4567" 
-          required 
+        <Field
+          name="telefono"
+          type="tel"
+          placeholder="+52 999 123 4567"
+          as="input"
+          class="input-field"
+          validate-on-blur
+
         />
         <label>Teléfono</label>
         <span class="focus-border"></span>
+        <ErrorMessage name="telefono" class="error-message" />
       </div>
       
       <div class="form-group textarea-group">
-        <textarea 
-          v-model="formData.mensaje" 
-          placeholder="Me gustaría saber más información sobre..." 
-          rows="5" 
-          required
-        ></textarea>
+        <Field
+          name="mensaje"
+          placeholder="Me gustaría saber más información sobre..."
+          as="textarea"
+          rows="5"
+          class="textarea-field"
+          validate-on-blur
+        />
         <label>Tu mensaje</label>
         <span class="focus-border"></span>
+        <ErrorMessage name="mensaje" class="error-message" />
       </div>
       
       <div class="privacy-checkbox">
-        <input 
-          type="checkbox" 
-          id="privacy-check" 
-          v-model="privacyAccepted" 
-          required
+        <Field
+          type="checkbox"
+          name="privacyAccepted"
+          id="privacy-check"
+          v-model="privacyAccepted"
+          as="input"
+          validate-on-blur
+
         />
         <label for="privacy-check">
-          He leído y acepto el <a href="#" @click.prevent="showPrivacyModal = true">Aviso de Privacidad</a>
+          He leído y acepto el 
+          <a href="#" @click.prevent="showPrivacyModal = true">Aviso de Privacidad</a>
         </label>
+        <ErrorMessage name="privacyAccepted" class="error-message" />
       </div>
       
-      <button type="submit" class="submit-btn" :disabled="isLoading">
+      <button type="submit" class="submit-btn" :disabled="!meta.valid || isLoading">
         <span v-if="!isLoading">Enviar mensaje</span>
         <span v-else>Enviando...</span>
         <svg width="24" height="18" viewBox="0 0 24 24" fill="none">
           <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-    </form>
+    </Form>
 
-    <!-- Modal de éxito -->
+    <!-- Aquí sigue igual el modal de éxito y PrivacyNotice -->
     <Transition name="modal">
       <div v-if="showSuccessModal" class="modal-mask">
         <div class="modal-wrapper">
@@ -75,7 +98,6 @@
             <div class="modal-header">
               <h3>¡Envío exitoso!</h3>
             </div>
-            
             <div class="modal-body">
               <div class="success-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="#4CAF50">
@@ -84,7 +106,6 @@
               </div>
               <p>Tus datos se han enviado correctamente.</p>
             </div>
-            
             <div class="modal-footer">
               <button class="modal-button" @click="closeModal">
                 Aceptar
@@ -95,123 +116,63 @@
       </div>
     </Transition>
 
-    <!-- Modal de Aviso de Privacidad -->
-    <Transition name="modal">
-      <div v-if="showPrivacyModal" class="modal-mask">
-        <div class="modal-wrapper">
-          <div class="modal-container privacy-modal">
-            <div class="modal-header">
-              <h3>Aviso de Privacidad</h3>
-            </div>
-            
-            <div class="modal-body">
-              <div class="privacy-content">
-                <h4>Responsable del tratamiento de tus datos personales</h4>
-                <p>Landing con domicilio en Localhost es responsable del tratamiento de los datos personales que nos proporciones.</p>
-                
-                <h4>Finalidad del tratamiento</h4>
-                <p>Los datos personales que recabamos serán utilizados para las siguientes finalidades:</p>
-                <ul>
-                  <li>Responder a tus consultas y solicitudes de información</li>
-                  <li>Prestar los servicios que nos hayas solicitado</li>
-                  <li>Mantenerte informado sobre nuestros productos y servicios</li>
-                </ul>
-                
-                <h4>Datos personales que recabamos</h4>
-                <p>Recabamos los siguientes datos personales:</p>
-                <ul>
-                  <li>Nombre completo</li>
-                  <li>Correo electrónico</li>
-                  <li>Número telefónico</li>
-                  <li>Cualquier otra información que nos proporciones en tu mensaje</li>
-                </ul>
-                
-                <h4>Tus derechos</h4>
-                <p>Tienes derecho a:</p>
-                <ul>
-                  <li>Acceder a tus datos personales</li>
-                  <li>Solicitar la rectificación o cancelación de los mismos</li>
-                  <li>Oponerte al tratamiento de tus datos</li>
-                  <li>Revocar tu consentimiento</li>
-                </ul>
-                <p>Para ejercer estos derechos, envía un correo a spixerspi@gmail.com con el asunto "Ejercicio de derechos ARCO".</p>
-                
-                <h4>Cambios al aviso de privacidad</h4>
-                <p>Nos reservamos el derecho de modificar este aviso de privacidad. Cualquier cambio será publicado en nuestro sitio web.</p>
-              </div>
-            </div>
-            
-            <div class="modal-footer">
-              <button class="modal-button" @click="showPrivacyModal = false">
-                Aceptar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Transition>
+    <PrivacyNotice v-model="showPrivacyModal" />
   </section>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 import { useReCaptcha } from 'vue-recaptcha-v3';
 import apiClient from '../api/apiClient';
+import PrivacyNotice from '../components/PrivacyNotice.vue';
+import * as yup from 'yup'
 
 const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
-const recaptchaBadge = ref(null);
 
-const formData = ref({
-  nombre_completo: '',
-  correo: '',
-  telefono: '',
-  mensaje: ''
-});
+// Esquema de validación con Yup
+const schema = yup.object({
+  nombre_completo: yup.string().required('El nombre es obligatorio'),
+  correo: yup.string().email('Correo inválido').required('El correo es obligatorio'),
+  telefono: yup.string().required('El teléfono es obligatorio'),
+  mensaje: yup.string().required('El mensaje no puede estar vacío'),
+  privacyAccepted: yup.boolean().oneOf([true], 'Debes aceptar el aviso de privacidad'),
+})
 
+
+const privacyAccepted = ref(false);
 const isLoading = ref(false);
 const showSuccessModal = ref(false);
 const showPrivacyModal = ref(false);
-const privacyAccepted = ref(false);
 
-// Mostrar badge de reCAPTCHA después de cargar
 onMounted(async () => {
   await recaptchaLoaded();
   const badge = document.querySelector('.grecaptcha-badge');
-  if (badge) {
-    badge.style.visibility = 'visible';
-  }
+  if (badge) badge.style.visibility = 'visible';
 });
 
-const submitForm = async () => {
+const submitForm = async (values, { resetForm }) => {
   try {
     isLoading.value = true;
     showSuccessModal.value = false;
-    
-    if (!privacyAccepted.value) {
-      throw new Error('Debes aceptar el aviso de privacidad');
-    }
 
+    // Ejecutar reCAPTCHA
     await recaptchaLoaded();
     const token = await executeRecaptcha('submit');
     console.log('reCAPTCHA token:', token);
 
-    if (!formData.value.nombre_completo || !formData.value.correo || !formData.value.mensaje) {
-      throw new Error('Por favor completa todos los campos requeridos');
-    }
-
     const payload = {
-      ...formData.value,
+      ...values,
       recaptchaToken: token
     };
 
     const response = await apiClient.post('/formulario/createData', payload);
-    
+
     if ([200, 201].includes(response.status)) {
       showSuccessModal.value = true;
-      formData.value = { nombre_completo: '', correo: '', telefono: '', mensaje: '' };
+      resetForm();
       privacyAccepted.value = false;
     }
-    
   } catch (error) {
     console.error('Submission error:', error);
     alert(error.response?.data?.message || error.message || 'Error al enviar el formulario');
@@ -227,6 +188,40 @@ const closeModal = () => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background-color: rgba(13, 71, 161, 0.1);
+}
+
+.close-button svg {
+  transition: transform 0.2s ease;
+}
+
+.close-button:hover svg {
+  transform: scale(1.1);
+}
+
+/* Ajustes para el header del modal con el nuevo botón */
+.modal-header {
+  position: relative;
+  padding: 1.5rem 3rem 1rem 1.5rem;
+  text-align: center;
+}
 
 .contact {
   padding: 3rem 2rem;
@@ -429,50 +424,6 @@ textarea:focus ~ .focus-border {
   overflow: hidden;
 }
 
-.privacy-modal {
-  max-width: 600px;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.privacy-modal .modal-body {
-  overflow-y: auto;
-  padding: 1.5rem;
-}
-
-.privacy-content p {
-  color: #6d6d6d; /* Color más oscuro que el #555 original */
-}
-
-
-/* Opcional: para los items de lista si necesitas más control */
-.privacy-content li {
-  color: #5369c0;
-}
-
-
-.privacy-content {
-  text-align: left;
-}
-
-.privacy-content h4 {
-  color: #0d47a1;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
-}
-
-.privacy-content p, .privacy-content ul {
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.privacy-content ul {
-  padding-left: 1.5rem;
-}
-
 .modal-header {
   padding: 1.5rem 1.5rem 0;
   text-align: center;
@@ -523,12 +474,6 @@ textarea:focus ~ .focus-border {
   box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
 }
 
-/* Transiciones del modal */
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
-}
-
 .modal-enter-from .modal-container,
 .modal-leave-to .modal-container {
   transform: translateY(-20px);
@@ -552,9 +497,13 @@ textarea:focus ~ .focus-border {
   .modal-container {
     width: 95%;
   }
+
+  .error-message {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+}
   
-  .privacy-modal {
-    max-height: 70vh;
-  }
 }
 </style>
