@@ -3,8 +3,9 @@
     <div class="header-content">
       <div class="logo">Landing Page - IDYGS93</div>
       <nav>
-        <a href="#welcome">Inicio</a>
-        <a href="#contact">Contacto</a>
+        <router-link to="/">Inicio</router-link>
+        <router-link to="/form">Contactanos</router-link>
+        <router-link to="/login">Iniciar Sesión</router-link>
       </nav>
     </div>
   </header>
