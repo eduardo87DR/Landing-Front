@@ -1,70 +1,102 @@
 <template>
-  <div class="dashboard-view">
-    <h1>Dashboard</h1>
-    <p>¡Bienvenido al Panel de Control de CRM!</p>
-    <p>Aquí puedes gestionar tus relaciones con los clientes de forma eficaz.</p>
-    <button @click="logout">Cerrar sesión</button>
-  </div>
+  <section class="dashboard">
+    <div class="dashboard-header">
+      <h1>Panel de Control</h1>
+      <p>Gestión centralizada de clientes y comunicaciones.</p>
+    </div>
+
+    <div class="dashboard-stats">
+      <div class="card">
+        <h2>Total de Contactos</h2>
+        <p>--</p>
+      </div>
+      <div class="card">
+        <h2>Usuarios Registrados</h2>
+        <p>--</p>
+      </div>
+      <div class="card">
+        <h2>Ordenar por Importancia</h2>
+        <p>--</p>
+      </div>
+    </div>
+
+    <div class="dashboard-messages">
+      <h2>Mensajes Recientes</h2>
+      <p class="placeholder">Aquí se mostrarán los leads recibidos próximamente.</p>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth';
-
-const auth = useAuthStore();
-
-const logout = () => {
-  auth.logout();
-};
+// lógica pendiente para la obtención de datos del dashboard
 </script>
 
 <style scoped>
-.dashboard-view {
+.dashboard {
+  padding: 2rem;
+  background-color: #dbf3fa;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  color: #0d47a1;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.dashboard-stats {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
-  background-color: #f0f4f8; /* Un color de fondo azul muy suave */
-  font-family: 'Arial', sans-serif; /* Fuente más legible */
-  color: #333; /* Color de texto oscuro para buen contraste */
-  padding: 20px;
-  box-sizing: border-box; /* Incluye el padding en el ancho y alto total */
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
 
-h1 {
-  color: #2c3e50; /* Un azul oscuro para el título */
-  margin-bottom: 20px;
-  font-size: 2.5em; /* Tamaño de fuente más grande para el título */
+.card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  flex: 1 1 250px;
 }
 
-p {
-  margin-bottom: 10px;
-  font-size: 1.1em; /* Tamaño de fuente ligeramente más grande para los párrafos */
-  text-align: center; /* Centra el texto de los párrafos */
-  max-width: 600px; /* Limita el ancho de los párrafos para mejor legibilidad */
-  line-height: 1.6; /* Espaciado de línea para mejor legibilidad */
+.card h2 {
+  color: #1976d2;
+  margin-bottom: 0.5rem;
 }
 
-button {
-  background-color: #42b983; /* Un verde amigable */
-  color: white;
-  border: none;
-  border-radius: 8px; /* Bordes más redondeados */
-  padding: 12px 25px; /* Más padding para un botón más grande */
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
-  margin-top: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+.card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
 }
 
-button:hover {
-  background-color: #36a071; /* Un verde un poco más oscuro al pasar el ratón */
-  transform: translateY(-2px); /* Efecto ligero de elevación */
+.dashboard-messages {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
 }
 
-button:active {
-  transform: translateY(0); /* Vuelve a la posición original al hacer clic */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra más pequeña al hacer clic */
+.dashboard-messages h2 {
+  color: #0d47a1;
+  margin-bottom: 1rem;
+}
+
+.placeholder {
+  color: #888;
+  font-style: italic;
 }
 </style>
