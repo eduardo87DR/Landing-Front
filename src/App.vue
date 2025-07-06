@@ -22,7 +22,7 @@ import Footer from './components/Footer.vue'
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #dbf3fa;
+  background: linear-gradient(145deg, #0f172a, #1e3a8a);
 }
 
 #app {

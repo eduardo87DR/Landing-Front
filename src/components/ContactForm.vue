@@ -482,6 +482,12 @@ textarea:focus ~ .focus-border {
 .modal-leave-to .modal-container {
   transform: translateY(-20px);
 }
+.error-message {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+}
 
 @media (max-width: 768px) {
   .contact {
@@ -503,12 +509,7 @@ textarea:focus ~ .focus-border {
     width: 95%;
   }
 
-  .error-message {
-  color: #d32f2f;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-  display: block;
-}
+  
   
 }
 </style>

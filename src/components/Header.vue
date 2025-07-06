@@ -10,7 +10,7 @@
         <template v-else>
           <router-link to="/">Inicio</router-link>
           <router-link to="/form">Contáctanos</router-link>
-          <router-link to="/login">Iniciar Sesión</router-link>
+          <!-- <router-link to="/login">Iniciar Sesión</router-link> -->
         </template>
       </nav>
     </div>
