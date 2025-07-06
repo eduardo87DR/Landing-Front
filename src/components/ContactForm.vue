@@ -228,9 +228,11 @@ const closeModal = () => {
   background: linear-gradient(135deg, #f8faff, #e6f0ff);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(13, 71, 161, 0.15);
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .contact:hover {
@@ -264,10 +266,12 @@ const closeModal = () => {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
+  width: 100%;
 }
 
 .form-group {
   position: relative;
+  width: 100%;
 }
 
 .form-group label {
@@ -478,12 +482,19 @@ textarea:focus ~ .focus-border {
 .modal-leave-to .modal-container {
   transform: translateY(-20px);
 }
+.error-message {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+}
 
-/* Media queries */
 @media (max-width: 768px) {
   .contact {
     padding: 2rem 1.5rem;
     border-radius: 12px;
+    width: 100%;
+    max-width: 7000px;
   }
   
   .contact-title {
@@ -498,12 +509,7 @@ textarea:focus ~ .focus-border {
     width: 95%;
   }
 
-  .error-message {
-  color: #d32f2f;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-  display: block;
-}
+  
   
 }
 </style>

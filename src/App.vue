@@ -22,7 +22,7 @@ import Footer from './components/Footer.vue'
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #dbf3fa;
+  background: linear-gradient(145deg, #0f172a, #1e3a8a);
 }
 
 #app {
@@ -33,5 +33,17 @@ body {
 
 .main-content {
   flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.router-view, 
+.router-view > * {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 </style>

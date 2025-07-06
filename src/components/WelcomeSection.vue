@@ -3,31 +3,81 @@
     <div class="digital-solutions-container">
       <div class="content-wrapper">
         <h1>Transforma tu Negocio con Soluciones Digitales</h1>
-        <p class="main-text">Potenciamos tu presencia digital con herramientas innovadoras diseñadas para el crecimiento empresarial.</p>
-        
+        <p class="main-text">
+          Potenciamos tu presencia digital con herramientas innovadoras diseñadas para el crecimiento empresarial.
+        </p>
+
         <div class="features-grid">
-          <div class="feature-item">
-            <div class="feature-icon">📈</div>
-            <h3>E-commerce Integrado</h3>
-            <p>Vende en línea con nuestra plataforma todo-en-uno</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">🤖</div>
-            <h3>Automatización</h3>
-            <p>Optimiza procesos con inteligencia artificial</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">📱</div>
-            <h3>Apps Móviles</h3>
-            <p>Llega a tus clientes en cualquier dispositivo</p>
+          <div
+            v-for="service in services"
+            :key="service.id"
+            class="feature-item"
+            @click="goToDetails(service.id)"
+          >
+            <div class="feature-icon">{{ service.icon }}</div>
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.description }}</p>
           </div>
         </div>
-        
-        <button class="cta-button">Solicita una Demo Gratis</button>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goToDetails = (serviceId) => {
+  router.push(`/details/${serviceId}`)
+}
+
+const services = [
+  {
+    id: 'automatizaciones',
+    title: 'Automatizaciones',
+    description: 'Optimiza procesos con inteligencia artificial',
+    icon: '🤖'
+  },
+  {
+    id: 'paginas-web',
+    title: 'Páginas Web',
+    description: 'Desarrollo web adaptable y funcional',
+    icon: '🌐'
+  },
+  {
+    id: 'apps-moviles',
+    title: 'Aplicaciones Móviles',
+    description: 'Llega a tus clientes en cualquier dispositivo',
+    icon: '📱'
+  },
+  {
+    id: 'actualizacion-sistemas',
+    title: 'Actualización de Sistemas',
+    description: 'Moderniza tu infraestructura tecnológica',
+    icon: '🔧'
+  },
+  {
+    id: 'entornos-corporativos',
+    title: 'Entornos Corporativos',
+    description: 'Implementación de soluciones empresariales',
+    icon: '🏢'
+  },
+  {
+    id: 'soporte-redes',
+    title: 'Soporte de Redes',
+    description: 'Diagnóstico y solución de problemas de red',
+    icon: '📡'
+  },
+  {
+    id: 'logistica',
+    title: 'Análisis de Logística',
+    description: 'Evaluación de software e infraestructura de red',
+    icon: '📊'
+  }
+]
+</script>
 
 <style scoped>
 .digital-solutions {
