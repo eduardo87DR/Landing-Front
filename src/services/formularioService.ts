@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:3000/formulario'; 
+const API_BASE = 'https://thinkguille.space/formulario'; 
 
 export const fetchLeads = async () => {
   const response = await axios.get(`${API_BASE}/all`); 

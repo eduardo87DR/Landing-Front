@@ -12,7 +12,7 @@ export const useAuthStore = defineStore("auth", () => {
   async function login(identifier, password) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        "https://thinkguille.space/auth/login",
         {
           identifier,
           password

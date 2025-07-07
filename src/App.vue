@@ -29,7 +29,7 @@ body {
   background: linear-gradient(145deg, #0f172a, #1e3a8a);
   color: #fff;
   line-height: 1.6;
-  overflow-x: hidden; /* Previene desbordamiento horizontal */
+  overflow-x: hidden; 
 }
 
 #app {
@@ -46,23 +46,20 @@ body {
   flex-direction: column;
 }
 
-/* Nuevo wrapper para forzar el ancho completo */
 .content-wrapper {
   width: 100%;
-  background: inherit; /* Hereda el fondo del gradiente */
+  background: inherit;
 }
 
-/* Contenedor principal estandarizado */
 .content-container {
   width: 100%;
-  max-width: 1200px; /* Ancho máximo fijo */
-  min-width: 320px; /* Ancho mínimo para móviles muy pequeños */
+  max-width: 1200px; 
+  min-width: 320px; 
   margin: 0 auto;
   padding: 1.5rem;
   box-sizing: border-box;
 }
 
-/* Asegura que Header y Footer también respeten el ancho */
 .header, .footer {
   width: 100%;
   max-width: 100vw;
@@ -74,7 +71,7 @@ body {
 @media (max-width: 1200px) {
   .content-container {
     padding: 1.5rem;
-    max-width: 100%; /* Permite usar todo el ancho disponible */
+    max-width: 100%; 
   }
 }
 
@@ -96,7 +93,6 @@ body {
   }
 }
 
-/* Forzar el ancho en vistas hijas */
 .router-view > * {
   width: 100% !important;
   max-width: 100% !important;
