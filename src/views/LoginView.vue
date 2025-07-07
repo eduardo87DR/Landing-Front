@@ -119,264 +119,128 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-    /* Fuentes y base */
+/* Fuentes y base */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 .login-view {
   min-height: 100vh;
   display: flex;
-  justify-content: flex-start; 
-  padding-left: 10%; 
+  justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 1rem;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
-  position: relative;
-  overflow: hidden;
-  max-width: none; 
-  width: 900px;
-}
-
-
-.login-view::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
 }
 
 .login-card {
-  background: rgba(23, 42, 69, 0.9);
-  max-width: 1000px;
+  background: rgba(23, 42, 69, 0.95);
   width: 100%;
+  max-width: 480px; /* Ancho máximo más adecuado */
   border-radius: 16px;
-  padding: 3.5rem 3rem 2.5rem;
+  padding: 2.5rem;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3),
               0 0 0 1px rgba(255, 255, 255, 0.05);
   text-align: center;
   animation: fadeInUp 0.9s ease forwards;
-  position: relative;
-  z-index: 1;
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 1rem;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(40px) translateX(-20px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) translateX(0);
+    transform: translateY(0);
   }
 }
 
 .login-title {
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 600;
   color: #ffffff;
-  margin-bottom: 0.4rem;
-  letter-spacing: 1px;
-  position: relative;
-  overflow: hidden;
-  white-space: nowrap;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* efecto typewriter */
-.login-title::after {
-  content: '|';
-  animation: blink 1.2s steps(2, start) infinite;
-  position: absolute;
-  right: 0;
-  top: 0;
-  color: #64b5f6;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 2.8rem;
+  margin-bottom: 2rem;
   font-weight: 500;
 }
 
 .form-group {
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.5rem;
   text-align: left;
-  position: relative;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
-  user-select: none;
-  transition: all 0.3s ease;
 }
 
-/* Input wrapper para icono y campo */
 .input-wrapper {
   position: relative;
 }
 
 .input-wrapper input {
   width: 100%;
-  padding: 14px 44px 14px 16px;
+  padding: 12px 42px 12px 14px;
   border: 2px solid rgba(100, 181, 246, 0.3);
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 500;
-  font-family: 'Montserrat', sans-serif;
+  border-radius: 8px;
+  font-size: 0.95rem;
   background: rgba(10, 25, 47, 0.5);
-  transition: all 0.3s ease;
   color: #ffffff;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.input-wrapper input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-  font-style: italic;
+  transition: all 0.3s ease;
 }
 
 .input-wrapper input:focus {
   outline: none;
   border-color: #64b5f6;
-  box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.2),
-              inset 0 1px 3px rgba(0, 0, 0, 0.2);
-  background: rgba(10, 25, 47, 0.7);
-}
-
-/* Animación de flotación para los campos */
-.form-group:hover label {
-  transform: translateX(5px);
-}
-
-.form-group:hover .input-wrapper input {
-  border-color: rgba(100, 181, 246, 0.5);
+  box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.2);
 }
 
 .input-icon {
   position: absolute;
-  right: 14px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   stroke: rgba(100, 181, 246, 0.7);
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.input-wrapper input:focus + .input-icon {
-  stroke: #64b5f6;
-  transform: translateY(-50%) scale(1.1);
 }
 
 .login-button {
-  margin-top: 1.6rem;
+  margin-top: 1.5rem;
   width: 100%;
   background: linear-gradient(90deg, #1976d2, #0d47a1);
   border: none;
-  padding: 16px 0;
-  font-size: 1.2rem;
+  padding: 14px 0;
+  font-size: 1.1rem;
   font-weight: 600;
   color: white;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.35),
-              0 0 0 1px rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.8rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.login-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, #2196f3, #1976d2);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .login-button:hover:not(:disabled) {
-  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5),
-              0 0 0 1px rgba(255, 255, 255, 0.15);
-  transform: translateY(-3px);
-}
-
-.login-button:hover:not(:disabled)::before {
-  opacity: 1;
-}
-
-.login-button:active:not(:disabled) {
-  transform: translateY(1px);
-  box-shadow: 0 5px 15px rgba(25, 118, 210, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(25, 118, 210, 0.4);
 }
 
 .login-button:disabled {
   background: #37474f;
   cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
-  color: rgba(255, 255, 255, 0.4);
 }
 
-/* Efecto de onda al hacer clic */
-.login-button:not(:disabled)::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.5);
-  opacity: 0;
-  border-radius: 100%;
-  transform: scale(1, 1) translate(-50%, -50%);
-  transform-origin: 50% 50%;
-}
-
-.login-button:not(:disabled):focus:not(:active)::after {
-  animation: ripple 0.6s ease-out;
-}
-
-@keyframes ripple {
-  0% {
-    transform: scale(0, 0);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(20, 20);
-    opacity: 0;
-  }
-}
-
-/* Spinner animado para loading */
 .loading-spinner {
   animation: spin 1s linear infinite;
-  stroke: white;
-}
-
-.loading-spinner .path {
-  stroke-linecap: round;
 }
 
 @keyframes spin {
@@ -386,47 +250,47 @@ const handleLogin = async () => {
 }
 
 .error-message {
-  margin-top: 1.2rem;
-  font-size: 0.95rem;
-  font-weight: 600;
+  margin-top: 1rem;
   color: #ff5252;
-  user-select: none;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  font-weight: 600;
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .login-view {
-    padding-left: 5%;
-    padding-right: 5%;
-    justify-content: center;
-  }
-  
+/* Media Queries para responsividad */
+@media (min-width: 768px) {
   .login-card {
-    padding: 2.8rem 2rem 2rem;
-    border-radius: 12px;
+    padding: 3rem 2.5rem;
+    max-width: 500px;
   }
   
   .login-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  margin-bottom: 0.6rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .input-wrapper input {
+    padding: 14px 44px 14px 16px;
+    font-size: 1rem;
+  }
+  
+  .login-button {
+    padding: 16px 0;
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
   .login-view {
-    padding: 1.5rem;
+    padding: 0.5rem;
   }
   
   .login-card {
-    padding: 2.5rem 1.5rem 1.5rem;
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
   }
   
   .login-title {
@@ -434,6 +298,21 @@ const handleLogin = async () => {
   }
   
   .subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1.8rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+  
+  .input-wrapper input {
+    padding: 10px 38px 10px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .login-button {
+    padding: 12px 0;
     font-size: 1rem;
   }
 }
