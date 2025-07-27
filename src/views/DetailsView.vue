@@ -2,7 +2,11 @@
   <section class="details-section">
     <div class="details-container" v-if="serviceData.title !== 'Servicio no encontrado'">
       <div class="service-header">
-        <component :is="serviceData.iconComponent" class="service-icon" />
+        <component 
+          :is="serviceData.iconComponent" 
+          class="service-icon" 
+          :style="{ color: iconColor }"
+        />
         <h1 class="service-title">{{ serviceData.title }}</h1>
       </div>
       
@@ -13,27 +17,40 @@
         <div class="service-features">
           <h3 class="features-title">Beneficios Clave</h3>
           <ul class="features-list">
-            <li v-for="(item, i) in serviceData.features" :key="i" class="feature-item">
+            <li 
+              v-for="(item, i) in serviceData.features" 
+              :key="i" 
+              class="feature-item"
+              :style="{ '--delay': `${i * 0.1}s` }"
+            >
               <span class="feature-bullet"></span>
               <span class="feature-text">{{ item }}</span>
             </li>
           </ul>
         </div>
         
-        <button class="service-cta" @click="goToForm">Solicitar Información</button>
+        <button class="service-cta" @click="goToForm">
+          <span>Solicitar Información</span>
+          <svg class="cta-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+          </svg>
+        </button>
       </div>
     </div>
     
     <div class="not-found" v-else>
       <h2 class="not-found-title">Servicio no encontrado</h2>
       <p class="not-found-message">El servicio especificado no está disponible.</p>
+      <button class="back-button" @click="router.push('/')">
+        Volver al inicio
+      </button>
     </div>
   </section>
 </template>
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import {
   Cog6ToothIcon,
   GlobeAltIcon,
@@ -47,6 +64,19 @@ import {
 const route = useRoute()
 const router = useRouter()
 const serviceId = route.params.service
+
+// Colores personalizados para cada servicio
+const serviceColors = {
+  automatizaciones: '#8e44ad',
+  'paginas-web': '#3498db',
+  'apps-moviles': '#e74c3c',
+  'actualizacion-sistemas': '#f39c12',
+  'entornos-corporativos': '#2ecc71',
+  'soporte-redes': '#1abc9c',
+  logistica: '#9b59b6'
+}
+
+const iconColor = ref('#64b5f6')
 
 const goToForm = () => {
   router.push('/form')
@@ -146,77 +176,155 @@ const serviceData = computed(() => serviceMap[serviceId] || {
   features: [],
   iconComponent: null
 })
+
+// Configurar color del icono según el servicio
+onMounted(() => {
+  if (serviceColors[serviceId]) {
+    iconColor.value = serviceColors[serviceId]
+  }
+})
 </script>
 
 <style scoped>
 .details-section {
   padding: 3rem 1rem;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 2rem auto;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .details-container {
-  background: rgba(23, 42, 69, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  transition: all 0.4s ease;
+}
+
+.details-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .service-header {
-  background: linear-gradient(90deg, rgba(25, 118, 210, 0.2), rgba(100, 181, 246, 0.15));
-  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+  padding: 2.5rem 1.5rem;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(129, 140, 248, 0.1) 0%, rgba(15, 23, 42, 0) 70%);
+  animation: rotate 20s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .service-icon {
-  width: 3rem;
-  height: 3rem;
-  margin: 0 auto 1rem;
-  color: #64b5f6;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.service-icon:hover {
+  transform: scale(1.1) rotate(10deg);
 }
 
 .service-title {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: #ffffff;
+  color: white;
   margin: 0;
-  background: linear-gradient(90deg, #64b5f6, #42a5f5);
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(90deg, #ffffff, #a5b4fc);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  display: inline-block;
 }
 
 .service-content {
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
 }
 
 .service-description {
-  font-size: 1.1rem;
-  line-height: 1.7;
+  font-size: 1.15rem;
+  line-height: 1.8;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 1.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.service-description::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(to bottom, v-bind(iconColor), rgba(129, 140, 248, 0.5));
+  border-radius: 3px;
 }
 
 .service-extra {
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: rgba(255, 255, 255, 0.7);
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .service-features {
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .features-title {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #64b5f6;
-  margin-bottom: 1.2rem;
+  color: #a5b4fc;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.features-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, v-bind(iconColor), rgba(129, 140, 248, 0.5));
+  border-radius: 3px;
 }
 
 .features-list {
@@ -228,67 +336,141 @@ const serviceData = computed(() => serviceMap[serviceId] || {
 .feature-item {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideIn 0.5s ease-out forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .feature-bullet {
   display: inline-block;
-  width: 6px;
-  height: 6px;
-  background-color: #64b5f6;
+  width: 8px;
+  height: 8px;
+  background-color: v-bind(iconColor);
   border-radius: 50%;
-  margin-right: 0.8rem;
-  margin-top: 0.6rem;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
   flex-shrink: 0;
+  box-shadow: 0 0 10px v-bind(iconColor);
 }
 
 .feature-text {
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 1.05rem;
+  line-height: 1.6;
   color: rgba(255, 255, 255, 0.85);
+  flex: 1;
 }
 
 .service-cta {
-  display: inline-block;
-  background: linear-gradient(90deg, #1976d2, #0d47a1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  background: linear-gradient(90deg, v-bind(iconColor), #6366f1);
   color: white;
   border: none;
-  padding: 0.9rem 2.2rem;
-  font-size: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.6s ease;
 }
 
 .service-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.service-cta:hover::before {
+  left: 100%;
 }
 
 .service-cta:active {
   transform: translateY(0);
 }
 
+.cta-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.service-cta:hover .cta-icon {
+  transform: translateX(5px);
+}
+
 .not-found {
   text-align: center;
   padding: 3rem 1.5rem;
-  background: rgba(23, 42, 69, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
 .not-found-title {
-  font-size: 1.5rem;
-  color: #ffffff;
+  font-size: 1.8rem;
+  color: white;
   margin-bottom: 1rem;
+  background: linear-gradient(90deg, #ffffff, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .not-found-message {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.7);
-  margin: 0;
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
 
 @media (min-width: 768px) {
@@ -297,20 +479,20 @@ const serviceData = computed(() => serviceMap[serviceId] || {
   }
   
   .service-header {
-    padding: 2.5rem;
+    padding: 3rem;
   }
   
   .service-icon {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 4.5rem;
+    height: 4.5rem;
   }
   
   .service-title {
-    font-size: 2rem;
+    font-size: 2.3rem;
   }
   
   .service-content {
-    padding: 2.5rem;
+    padding: 3rem;
   }
   
   .service-description {
@@ -318,31 +500,35 @@ const serviceData = computed(() => serviceMap[serviceId] || {
   }
   
   .features-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+  }
+  
+  .feature-text {
+    font-size: 1.1rem;
   }
   
   .not-found {
-    padding: 4rem 2rem;
+    padding: 4rem;
   }
   
   .not-found-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 }
 
 @media (min-width: 1024px) {
   .details-container {
     display: flex;
-    min-height: 500px;
+    min-height: 600px;
   }
   
   .service-header {
-    flex: 0 0 300px;
+    flex: 0 0 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-bottom: none;
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .service-content {
