@@ -1,4 +1,3 @@
-<!-- src/components/PrivacyNotice.vue -->
 <template>
   <Transition name="modal">
     <div v-if="modelValue" class="modal-mask">
@@ -8,14 +7,14 @@
             <h3>Aviso de Privacidad</h3>
             <button class="close-button" @click="$emit('update:modelValue', false)">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6L18 18" stroke="#0d47a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 6L6 18M6 6L18 18" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           </div>
           <div class="modal-body">
             <div class="privacy-content">
               <h4>Responsable del tratamiento de tus datos personales</h4>
-              <p>Landing con domicilio en Localhost es responsable del tratamiento de los datos personales que nos proporciones.</p>
+              <p>Nexus es responsable del tratamiento de los datos personales que nos proporciones.</p>
 
               <h4>Finalidad del tratamiento</h4>
               <p>Los datos personales que recabamos serán utilizados para las siguientes finalidades:</p>
@@ -42,7 +41,7 @@
                 <li>Oponerte al tratamiento de tus datos</li>
                 <li>Revocar tu consentimiento</li>
               </ul>
-              <p>Para ejercer estos derechos, envía un correo a spixerspi@gmail.com con el asunto "Ejercicio de derechos ARCO".</p>
+              <p>Para ejercer estos derechos, contáctanos a través de nuestros canales oficiales.</p>
 
               <h4>Cambios al aviso de privacidad</h4>
               <p>Nos reservamos el derecho de modificar este aviso de privacidad. Cualquier cambio será publicado en nuestro sitio web.</p>
@@ -80,18 +79,12 @@ defineEmits(['update:modelValue'])
   display: flex;
   align-items: center;
   justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .close-button:hover {
-  background-color: rgba(13, 71, 161, 0.1);
-}
-
-.close-button svg {
-  transition: transform 0.2s ease;
-}
-
-.close-button:hover svg {
-  transform: scale(1.1);
+  background-color: rgba(129, 140, 248, 0.1);
+  color: #818cf8;
 }
 
 .modal-mask {
@@ -117,28 +110,34 @@ defineEmits(['update:modelValue'])
 
 .modal-container {
   width: 90%;
-  max-width: 1000px;
+  max-width: 800px;
   max-height: 80vh;
   margin: 0 auto;
-  background-color: #fff;
+  background: rgba(15, 23, 42, 0.95);
   border-radius: 12px;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header {
   position: relative;
   padding: 1.5rem 3rem 1rem 1.5rem;
   text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header h3 {
   margin: 0;
-  color: #0d47a1;
   font-size: 1.5rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #ffffff, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .modal-body {
@@ -149,18 +148,19 @@ defineEmits(['update:modelValue'])
 }
 
 .privacy-content h4 {
-  color: #000000;
+  color: #e2e8f0;
   margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .privacy-content p,
 .privacy-content ul {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   font-size: 0.95rem;
-  line-height: 1.5;
-  color: #000000;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .privacy-content ul {
@@ -168,18 +168,19 @@ defineEmits(['update:modelValue'])
 }
 
 .privacy-content li {
-  color: #434343;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .modal-footer {
   padding: 1rem;
   display: flex;
   justify-content: center;
-  border-top: 1px solid #eee;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-button {
-  background: linear-gradient(90deg, #1976d2, #0d47a1);
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -192,7 +193,7 @@ defineEmits(['update:modelValue'])
 
 .modal-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
 }
 
 /* Transiciones del modal */
@@ -211,6 +212,14 @@ defineEmits(['update:modelValue'])
   .modal-container {
     width: 95%;
     max-height: 70vh;
+  }
+  
+  .modal-header {
+    padding: 1.25rem 2.5rem 1rem 1.25rem;
+  }
+  
+  .modal-body {
+    padding: 1.25rem;
   }
 }
 </style>

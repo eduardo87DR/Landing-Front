@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <Header />
+    <!-- Header ocupa todo el ancho visual -->
+    <div class="full-width">
+      <Header />
+    </div>
+
     <main class="main-content">
       <div class="content-wrapper">
         <div class="content-container">
@@ -8,7 +12,11 @@
         </div>
       </div>
     </main>
-    <Footer />
+
+    <!-- Footer ocupa todo el ancho visual -->
+    <div class="full-width">
+      <Footer />
+    </div>
   </div>
 </template>
 
@@ -29,7 +37,8 @@ body {
   background: linear-gradient(145deg, #0f172a, #1e3a8a);
   color: #fff;
   line-height: 1.6;
-  overflow-x: hidden; /* Previene desbordamiento horizontal */
+  overflow-x: hidden;
+  width: 100%;
 }
 
 #app {
@@ -37,44 +46,43 @@ body {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
+  max-width: 100vw;
 }
 
+/* Este clase fuerza que header/footer se expandan al 100vw */
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+/* El contenido principal sigue centrado */
 .main-content {
   flex: 1;
   width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Nuevo wrapper para forzar el ancho completo */
 .content-wrapper {
   width: 100%;
-  background: inherit; /* Hereda el fondo del gradiente */
+  background: inherit;
 }
 
-/* Contenedor principal estandarizado */
 .content-container {
   width: 100%;
-  max-width: 1200px; /* Ancho máximo fijo */
-  min-width: 320px; /* Ancho mínimo para móviles muy pequeños */
+  max-width: 1200px;
+  min-width: 320px;
   margin: 0 auto;
   padding: 1.5rem;
   box-sizing: border-box;
 }
 
-/* Asegura que Header y Footer también respeten el ancho */
-.header, .footer {
-  width: 100%;
-  max-width: 100vw;
-  margin: 0;
-  padding: 0;
-}
-
-/* Media Queries optimizadas */
+/* Responsive spacing */
 @media (max-width: 1200px) {
   .content-container {
     padding: 1.5rem;
-    max-width: 100%; /* Permite usar todo el ancho disponible */
   }
 }
 
@@ -94,12 +102,5 @@ body {
   .content-container {
     padding: 0.75rem;
   }
-}
-
-/* Forzar el ancho en vistas hijas */
-.router-view > * {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box;
 }
 </style>

@@ -1,102 +1,134 @@
 <template>
-  <section class="contact" id="contact">
-    <h2 class="contact-title">Contáctanos</h2>
-    <Form @submit="submitForm"
-    :validation-schema="schema" 
-    v-slot="{ errors, meta }" 
-    class="form">
-
-      <div class="form-group">
-        <Field
-          name="nombre_completo"
-          type="text"
-          placeholder="Guillermo García Canul"
-          as="input"
-          class="input-field"
-          validate-on-blur
-        />
-        <label>Nombre completo</label>
-        <span class="focus-border"></span>
-        <ErrorMessage name="nombre_completo" class="error-message" />
+  <section class="contact-view">
+    <div class="contact-container">
+      <div class="contact-intro">
+        <h2 class="intro-title">¿Necesitas ayuda?</h2>
+        <p class="intro-text">
+          ¿Tienes dudas sobre nuestros servicios? ¿Necesitas asistencia técnica o información adicional? 
+          Completa el siguiente formulario y nuestro equipo de soporte se pondrá en contacto contigo a la brevedad.
+        </p>
+        
+        <div class="contact-features">
+          <div class="feature-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <h3>Soporte personalizado</h3>
+            <p>Asistencia técnica especializada para resolver tus inquietudes</p>
+          </div>
+          
+          <div class="feature-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <h3>Respuesta rápida</h3>
+            <p>Nos comprometemos a responderte en menos de 24 horas hábiles</p>
+          </div>
+        </div>
       </div>
-      
-      <div class="form-group">
-        <Field
-          name="correo"
-          type="email"
-          placeholder="guillermo.jesus.garcia.canul@gmail.com"
-          as="input"
-          class="input-field"
-          validate-on-blur
 
-        />
-        <label>Correo electrónico</label>
-        <span class="focus-border"></span>
-        <ErrorMessage name="correo" class="error-message" />
+      <div class="contact-form">
+        <h2 class="form-title">Formulario de contacto</h2>
+        <p class="form-subtitle">Completa los siguientes datos y nos comunicaremos contigo</p>
+        
+        <Form @submit="submitForm" :validation-schema="schema" v-slot="{ errors, meta }" class="form">
+          <div class="form-group">
+            <Field
+              name="nombre_completo"
+              type="text"
+              placeholder="Guillermo García Canul"
+              as="input"
+              class="input-field"
+              validate-on-blur
+            />
+            <label>Nombre completo</label>
+            <span class="focus-border"></span>
+            <ErrorMessage name="nombre_completo" class="error-message" />
+          </div>
+          
+          <div class="form-group">
+            <Field
+              name="correo"
+              type="email"
+              placeholder="guillermo.jesus.garcia.canul@gmail.com"
+              as="input"
+              class="input-field"
+              validate-on-blur
+            />
+            <label>Correo electrónico</label>
+            <span class="focus-border"></span>
+            <ErrorMessage name="correo" class="error-message" />
+          </div>
+          
+          <div class="form-group">
+            <Field
+              name="telefono"
+              type="tel"
+              placeholder="+52 999 123 4567"
+              as="input"
+              class="input-field"
+              validate-on-blur
+            />
+            <label>Teléfono</label>
+            <span class="focus-border"></span>
+            <ErrorMessage name="telefono" class="error-message" />
+          </div>
+          
+          <div class="form-group textarea-group">
+            <Field
+              name="mensaje"
+              placeholder="Me gustaría saber más información sobre..."
+              as="textarea"
+              rows="5"
+              class="textarea-field"
+              validate-on-blur
+            />
+            <label>Tu mensaje</label>
+            <span class="focus-border"></span>
+            <ErrorMessage name="mensaje" class="error-message" />
+          </div>
+          
+          <div class="privacy-checkbox">
+            <Field
+              type="checkbox"
+              name="privacyAccepted"
+              id="privacy-check"
+              v-model="privacyAccepted"
+              as="input"
+              validate-on-blur
+            />
+            <label for="privacy-check">
+              He leído y acepto el 
+              <a href="#" @click.prevent="showPrivacyModal = true">Aviso de Privacidad</a>
+            </label>
+            <ErrorMessage name="privacyAccepted" class="error-message" />
+          </div>
+          
+          <button type="submit" class="submit-btn" :disabled="!meta.valid || isLoading">
+            <span v-if="!isLoading">Enviar mensaje</span>
+            <span v-else class="loading-text">
+              <svg class="loading-spinner" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="5"></circle>
+              </svg>
+              <span>Enviando...</span>
+            </span>
+          </button>
+        </Form>
       </div>
-      
-      <div class="form-group">
-        <Field
-          name="telefono"
-          type="tel"
-          placeholder="+52 999 123 4567"
-          as="input"
-          class="input-field"
-          validate-on-blur
+    </div>
 
-        />
-        <label>Teléfono</label>
-        <span class="focus-border"></span>
-        <ErrorMessage name="telefono" class="error-message" />
-      </div>
-      
-      <div class="form-group textarea-group">
-        <Field
-          name="mensaje"
-          placeholder="Me gustaría saber más información sobre..."
-          as="textarea"
-          rows="5"
-          class="textarea-field"
-          validate-on-blur
-        />
-        <label>Tu mensaje</label>
-        <span class="focus-border"></span>
-        <ErrorMessage name="mensaje" class="error-message" />
-      </div>
-      
-      <div class="privacy-checkbox">
-        <Field
-          type="checkbox"
-          name="privacyAccepted"
-          id="privacy-check"
-          v-model="privacyAccepted"
-          as="input"
-          validate-on-blur
-
-        />
-        <label for="privacy-check">
-          He leído y acepto el 
-          <a href="#" @click.prevent="showPrivacyModal = true">Aviso de Privacidad</a>
-        </label>
-        <ErrorMessage name="privacyAccepted" class="error-message" />
-      </div>
-      
-      <button type="submit" class="submit-btn" :disabled="!meta.valid || isLoading">
-        <span v-if="!isLoading">Enviar mensaje</span>
-        <span v-else>Enviando...</span>
-        <svg width="24" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </Form>
-
-    <!-- Aquí sigue igual el modal de éxito y PrivacyNotice -->
+    <!-- Modal de éxito -->
     <Transition name="modal">
       <div v-if="showSuccessModal" class="modal-mask">
         <div class="modal-wrapper">
           <div class="modal-container">
+            <button class="close-button" @click="closeModal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
             <div class="modal-header">
-              <h3>¡Envío exitoso!</h3>
+              <h3>¡Mensaje enviado!</h3>
             </div>
             <div class="modal-body">
               <div class="success-icon">
@@ -104,7 +136,7 @@
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
               </div>
-              <p>Tus datos se han enviado correctamente.</p>
+              <p>Hemos recibido tu mensaje correctamente. Te responderemos a la brevedad.</p>
             </div>
             <div class="modal-footer">
               <button class="modal-button" @click="closeModal">
@@ -138,7 +170,6 @@ const schema = yup.object({
   mensaje: yup.string().required('El mensaje no puede estar vacío'),
   privacyAccepted: yup.boolean().oneOf([true], 'Debes aceptar el aviso de privacidad'),
 })
-
 
 const privacyAccepted = ref(false);
 const isLoading = ref(false);
@@ -187,86 +218,122 @@ const closeModal = () => {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
-
-.close-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: all 0.2s ease;
+.contact-view {
+  min-height: 100vh;
   display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 2rem;
+}
+
+.contact-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+}
+
+.contact-intro {
+  flex: 1;
+  padding: 3rem;
+  background: rgba(16, 31, 54, 0.8);
+  color: white;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
-.close-button:hover {
-  background-color: rgba(13, 71, 161, 0.1);
-}
-
-.close-button svg {
-  transition: transform 0.2s ease;
-}
-
-.close-button:hover svg {
-  transform: scale(1.1);
-}
-
-/* Ajustes para el header del modal con el nuevo botón */
-.modal-header {
-  position: relative;
-  padding: 1.5rem 3rem 1rem 1.5rem;
-  text-align: center;
-}
-
-.contact {
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, #f8faff, #e6f0ff);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(13, 71, 161, 0.15);
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-}
-
-.contact:hover {
-  box-shadow: 0 12px 35px rgba(13, 71, 161, 0.2);
-}
-
-.contact-title {
-  text-align: center;
-  color: #0d47a1;
-  margin-bottom: 2.5rem;
+.intro-title {
   font-size: 2rem;
-  font-weight: 600;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, #ffffff, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.contact-title::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, #1976d2, #0d47a1);
-  border-radius: 3px;
+.intro-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2.5rem;
+}
+
+.contact-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.feature-item {
+  background: rgba(18, 31, 63, 0.5);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(79, 21, 134, 0.2);
+}
+
+.feature-item svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-item h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.feature-item p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.contact-form {
+  flex: 1;
+  padding: 3rem;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.form-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #ffffff, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.textarea-field {
+  font-family: inherit;
+}
+
+.form-subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  font-weight: 400;
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
-  width: 100%;
 }
 
 .form-group {
@@ -279,39 +346,45 @@ const closeModal = () => {
   top: -0.6rem;
   left: 0.8rem;
   font-size: 0.8rem;
-  color: #0d47a1;
-  background: #f8faff;
+  color: #818cf8;
+  background: #0f172a;
   padding: 0 5px;
   z-index: 2;
   transition: all 0.2s ease;
   pointer-events: none;
 }
 
-input, textarea {
+.input-field, .textarea-field {
   width: 100%;
   padding: 1.2rem;
   border-radius: 8px;
-  border: 2px solid #d3e0f7;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
-  background: transparent;
+  background: rgba(30, 41, 59, 0.5);
+  color: white;
   transition: all 0.3s ease;
 }
 
-input:focus, textarea:focus {
-  border-color: #1976d2;
-  outline: none;
+.textarea-field {
+  resize: vertical;
+  min-height: 120px;
 }
 
-input:focus + label,
-input:not(:placeholder-shown) + label,
-textarea:focus + label,
-textarea:not(:placeholder-shown) + label {
+.input-field:focus, .textarea-field:focus {
+  border-color: #818cf8;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+}
+
+.input-field:focus + label,
+.input-field:not(:placeholder-shown) + label,
+.textarea-field:focus + label,
+.textarea-field:not(:placeholder-shown) + label {
   top: -0.6rem;
   left: 0.8rem;
   font-size: 0.8rem;
-  color: #0d47a1;
-  background: #f8faff;
+  color: #818cf8;
+  background: #0f172a;
 }
 
 .focus-border {
@@ -320,17 +393,13 @@ textarea:not(:placeholder-shown) + label {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #1976d2, #0d47a1);
+  background: linear-gradient(90deg, #818cf8, #6366f1);
   transition: width 0.4s ease;
 }
 
-input:focus ~ .focus-border,
-textarea:focus ~ .focus-border {
+.input-field:focus ~ .focus-border,
+.textarea-field:focus ~ .focus-border {
   width: 100%;
-}
-
-.textarea-group {
-  margin-bottom: 0.5rem;
 }
 
 .privacy-checkbox {
@@ -342,15 +411,20 @@ textarea:focus ~ .focus-border {
 .privacy-checkbox input {
   width: auto;
   margin-right: 0.8rem;
+  accent-color: #818cf8;
 }
 
 .privacy-checkbox label {
+  position: static;
   font-size: 0.9rem;
-  color: #555;
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  padding: 0;
+  transform: none;
 }
 
 .privacy-checkbox a {
-  color: #1976d2;
+  color: #818cf8;
   text-decoration: none;
   font-weight: 500;
 }
@@ -359,12 +433,19 @@ textarea:focus ~ .focus-border {
   text-decoration: underline;
 }
 
+.error-message {
+  color: #f87171;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
 .submit-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
-  background: linear-gradient(90deg, #1976d2, #0d47a1);
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
   color: white;
   border: none;
   padding: 1.2rem 2rem;
@@ -373,29 +454,41 @@ textarea:focus ~ .focus-border {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: fit-content;
-  margin: 0.5rem auto 0;
-  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+  width: 100%;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
 
-.submit-btn:active {
-  transform: translateY(0);
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
-.submit-btn svg {
-  transition: transform 0.3s ease;
+.loading-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.submit-btn:hover svg {
-  transform: translateX(4px);
+.loading-spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  animation: spin 1s linear infinite;
+  color: white;
 }
 
-/* Estilos del modal */
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modal styles */
 .modal-mask {
   position: fixed;
   z-index: 9999;
@@ -421,21 +514,44 @@ textarea:focus ~ .focus-border {
   width: 90%;
   max-width: 400px;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: #1e293b;
   border-radius: 12px;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.close-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .modal-header {
-  padding: 1.5rem 1.5rem 0;
+  position: relative;
+  padding: 1.5rem 3rem 1rem 1.5rem;
   text-align: center;
 }
 
 .modal-header h3 {
   margin: 0;
-  color: #0d47a1;
+  color: white;
   font-size: 1.5rem;
 }
 
@@ -450,7 +566,7 @@ textarea:focus ~ .focus-border {
 
 .modal-body p {
   margin: 0;
-  color: #555;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1.1rem;
 }
 
@@ -458,11 +574,11 @@ textarea:focus ~ .focus-border {
   padding: 1rem;
   display: flex;
   justify-content: center;
-  border-top: 1px solid #eee;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-button {
-  background: linear-gradient(90deg, #1976d2, #0d47a1);
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -475,41 +591,51 @@ textarea:focus ~ .focus-border {
 
 .modal-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
 }
 
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
-  transform: translateY(-20px);
-}
-.error-message {
-  color: #d32f2f;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-  display: block;
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-  .contact {
-    padding: 2rem 1.5rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 7000px;
+  .contact-container {
+    flex-direction: column;
   }
   
-  .contact-title {
-    font-size: 1.7rem;
+  .contact-intro, .contact-form {
+    padding: 2rem;
+  }
+  
+  .intro-title, .form-title {
+    font-size: 1.6rem;
+  }
+  
+  .contact-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-view {
+    padding: 1rem;
+  }
+  
+  .contact-intro, .contact-form {
+    padding: 1.5rem;
+  }
+  
+  .intro-title, .form-title {
+    font-size: 1.4rem;
   }
   
   .form {
     gap: 1.5rem;
   }
-
-  .modal-container {
-    width: 95%;
+  
+  .input-field, .textarea-field {
+    padding: 1rem;
   }
-
   
-  
+  .submit-btn {
+    padding: 1rem;
+  }
 }
 </style>

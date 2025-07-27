@@ -128,9 +128,8 @@
     </div>
   </section>
 </template>
-
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { fetchLeads } from '@/services/formularioService'
 
 // Definición de tipos
@@ -155,6 +154,7 @@ const cards = ref([
   { title: 'Leads Contactados', value: '--' },
   { title: 'Leads Descartados', value: '--' }
 ])
+const savingState = ref(false)
 
 const estadoLabels: Record<LeadEstado, string> = {
   nuevo: 'Nuevo',
@@ -167,15 +167,27 @@ const pageSize = 5
 
 // Inicializa un lead con valores por defecto
 function initializeLead(lead: any): Lead {
+  const savedLead = localStorage.getItem(`lead_${lead.id}`)
+  const savedData = savedLead ? JSON.parse(savedLead) : {}
+
   return {
     ...lead,
-    leido: lead.leido || false,
-    importante: lead.importante || false,
-    estado: (lead.estado && ['nuevo', 'contactado', 'descartado'].includes(lead.estado)) 
-      ? lead.estado as LeadEstado 
-      : 'nuevo',
+    leido: savedData.leido ?? lead.leido ?? false,
+    importante: savedData.importante ?? lead.importante ?? false,
+    estado: (savedData.estado ?? lead.estado ?? 'nuevo') as LeadEstado,
     fecha: lead.fecha || new Date().toISOString()
   }
+}
+
+// Guardar localmente el estado
+async function saveLeadState(lead: Lead) {
+  savingState.value = true
+  const { id, leido, importante, estado } = lead
+  localStorage.setItem(`lead_${id}`, JSON.stringify({ leido, importante, estado }))
+  
+  // Pequeño delay para que se note la animación
+  await new Promise(resolve => setTimeout(resolve, 300))
+  savingState.value = false
 }
 
 const validLeads = computed(() =>
@@ -238,21 +250,24 @@ function formatDate(dateString: string) {
   return new Date(dateString).toLocaleDateString('es-ES', options)
 }
 
-function toggleImportant(lead: Lead) {
+async function toggleImportant(lead: Lead) {
   lead.importante = !lead.importante
+  await saveLeadState(lead)
   updateStats()
 }
 
-function markAsRead(lead: Lead) {
+async function markAsRead(lead: Lead) {
   lead.leido = true
+  await saveLeadState(lead)
   updateStats()
 }
 
-function updateLeadStatus(lead: Lead) {
+async function updateLeadStatus(lead: Lead) {
   // Validación adicional por si acaso
   if (!['nuevo', 'contactado', 'descartado'].includes(lead.estado!)) {
     lead.estado = 'nuevo'
   }
+  await saveLeadState(lead)
   updateStats()
 }
 
@@ -272,6 +287,15 @@ onMounted(async () => {
     console.error('Error al cargar leads:', error)
   }
 })
+
+// Watcher para cambios en los leads
+watch(leads, (newLeads) => {
+  newLeads.forEach(lead => {
+    if (lead.id) {
+      saveLeadState(lead)
+    }
+  })
+}, { deep: true })
 </script>
 
 <style scoped>
@@ -590,26 +614,75 @@ onMounted(async () => {
   color: white;
 }
 
+/* Agrega esto en tu sección de estilos */
 .status-select {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(129, 140, 248, 0.3);
   color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23818cf8'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.2rem;
+  padding-right: 2rem;
 }
 
 .status-select:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background-color: rgba(30, 41, 59, 0.9);
+  border-color: rgba(129, 140, 248, 0.5);
 }
 
 .status-select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.3);
+  box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.3);
+  border-color: #818cf8;
 }
 
+/* Estilo para las opciones del dropdown */
+.status-select option {
+  background: rgba(15, 23, 42, 0.95);
+  color: white;
+  padding: 0.5rem;
+}
+
+/* Para el dropdown de ordenación */
+.sort-controls select {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  color: white;
+  padding: 0.5rem 1rem 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23818cf8'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.2rem;
+  padding-right: 2rem;
+}
+
+.sort-controls select:hover {
+  background-color: rgba(30, 41, 59, 0.9);
+  border-color: rgba(129, 140, 248, 0.5);
+}
+
+.sort-controls select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.3);
+  border-color: #818cf8;
+}
+
+.sort-controls select option {
+  background: rgba(15, 23, 42, 0.95);
+  color: white;
+}
 .message-content {
   margin-top: 1rem;
 }
