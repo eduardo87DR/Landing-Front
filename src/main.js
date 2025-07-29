@@ -10,12 +10,12 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(VueReCaptcha, {
-  siteKey: '6LeCpm4rAAAAABdDE_xaGakDWT3nMFdDw_fFpdnm',
+  siteKey: window.env.RECAPTCHA_SITE_KEY,
   loaderOptions: {
-    autoHideBadge: false, // Cambiado a false para ver el badge
+    autoHideBadge: false,
     renderParameters: {
       hl: 'es',
-      badge: 'bottomright' // Posición del badge
+      badge: 'bottomright'
     }
   }
 })

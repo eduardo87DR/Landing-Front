@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-const baseURL =
-  import.meta.env.PROD
-    ? 'https://thinkguille.space'
-    : 'http://localhost:3000';
+const baseURL = (window as any).env?.API_URL || 'http://localhost:3000';
 
 const apiClient = axios.create({
   baseURL,
+  withCredentials: true, 
   headers: {
     'Content-Type': 'application/json',
   },
@@ -25,4 +23,5 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 export default apiClient;

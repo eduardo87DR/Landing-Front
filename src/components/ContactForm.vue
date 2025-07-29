@@ -156,7 +156,7 @@
 import { ref, onMounted } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import { useReCaptcha } from 'vue-recaptcha-v3';
-import apiClient from '../api/apiClient';
+import apiClient from '@/api/apiClient';
 import PrivacyNotice from '../components/PrivacyNotice.vue';
 import * as yup from 'yup'
 
