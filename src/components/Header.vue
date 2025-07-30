@@ -14,23 +14,22 @@
           </button>
         </template>
         <template v-else>
-          <router-link to="/" class="nav-link">
+          <router-link to="/" class="nav-link" @click="handleNavClick">
             <HomeIcon class="nav-icon" />
             <span>Inicio</span>
           </router-link>
-          <router-link to="/form" class="nav-link">
+          <router-link to="/form" class="nav-link" @click="handleNavClick">
             <ChatBubbleBottomCenterTextIcon class="nav-icon" />
             <span>Contáctanos</span>
           </router-link>
-          <router-link to="/login" class="nav-link">
+          <router-link to="/login" class="nav-link" @click="handleNavClick">
             <ArrowRightOnRectangleIcon class="nav-icon" />
             <span>Iniciar Sesión</span>
           </router-link>
         </template>
       </nav>
       
-      <!-- Botón de menú para móviles -->
-      <button class="mobile-menu-btn" @click="toggleMenu">
+      <button class="mobile-menu-btn" @click="toggleMenu" aria-label="Menú">
         <Bars3Icon class="menu-icon" />
       </button>
     </div>
@@ -53,6 +52,16 @@ const router = useRouter();
 const menuOpen = ref(false);
 
 const isAuthenticated = computed(() => auth.isAuthenticated);
+
+const handleNavClick = () => {
+  if (window.innerWidth <= 768) {
+    menuOpen.value = false;
+    const nav = document.querySelector('.nav-menu');
+    if (nav) {
+      nav.classList.remove('active');
+    }
+  }
+};
 
 const logout = () => {
   auth.logout();
@@ -77,8 +86,9 @@ const toggleMenu = () => {
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   width: 100%;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 1000;
   transition: all 0.3s ease;
 }
@@ -91,7 +101,7 @@ const toggleMenu = () => {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 0.8rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -105,7 +115,6 @@ const toggleMenu = () => {
   font-size: 1.25rem;
   font-weight: 700;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .logo-name {
@@ -150,7 +159,7 @@ const toggleMenu = () => {
   color: #a5b4fc;
 }
 
-.nav-icon {
+.nav-icon, .logout-icon {
   width: 1.2rem;
   height: 1.2rem;
 }
@@ -176,20 +185,16 @@ const toggleMenu = () => {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.logout-icon {
-  width: 1.2rem;
-  height: 1.2rem;
-}
-
 .mobile-menu-btn {
   display: none;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border: none;
   border-radius: 8px;
   padding: 0.5rem;
   color: #e2e8f0;
   cursor: pointer;
   transition: all 0.3s ease;
+  z-index: 1001;
 }
 
 .mobile-menu-btn:hover {
@@ -198,18 +203,19 @@ const toggleMenu = () => {
 }
 
 .menu-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.8rem;
+  height: 1.8rem;
 }
 
 /* Responsive Styles */
 @media (max-width: 1024px) {
   .header-content {
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.5rem;
   }
   
   .nav-link, .logout-btn {
     padding: 0.6rem 1rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -219,10 +225,10 @@ const toggleMenu = () => {
   }
   
   .nav-menu {
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 60px;
     left: 0;
-    width: 100%;
+    right: 0;
     background: rgba(15, 23, 42, 0.98);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -231,13 +237,14 @@ const toggleMenu = () => {
     padding: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: max-height 0.4s ease-out;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 999;
   }
   
   .nav-menu.active {
-    max-height: 400px;
-    padding: 1rem 0;
+    max-height: 100vh;
+    padding: 0.5rem 0;
   }
   
   .nav-link, 
@@ -247,7 +254,7 @@ const toggleMenu = () => {
     border-radius: 0;
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    justify-content: center;
+    justify-content: flex-start;
   }
   
   .nav-link:hover,
@@ -262,15 +269,40 @@ const toggleMenu = () => {
 
 @media (max-width: 480px) {
   .header-content {
-    padding: 0.75rem 1rem;
+    padding: 0.7rem 1rem;
   }
   
   .logo {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
   
   .logo-suffix {
     display: none;
+  }
+  
+  .nav-menu {
+    top: 56px;
+  }
+  
+  .nav-link, 
+  .logout-btn {
+    padding: 0.9rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .menu-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo-name {
+    font-size: 1.1rem;
+  }
+  
+  .header-content {
+    padding: 0.6rem 0.8rem;
   }
 }
 </style>

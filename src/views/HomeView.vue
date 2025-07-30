@@ -1,20 +1,49 @@
 <template>
-  <main class="home">
+  <main class="home-view">
     <WelcomeSection />
-    <!-- <ContactForm /> -->
   </main>
 </template>
 
 <script setup>
 import WelcomeSection from '../components/WelcomeSection.vue'
-// import ContactForm from '../components/ContactForm.vue'
 </script>
 
 <style scoped>
-.home {
-  padding: 2rem;
-  margin: 0 auto;
-  max-width: 20000px;
+.home-view {
   width: 100%;
+  min-height: calc(100vh - 120px); 
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 1200px) {
+  .home-view {
+    min-height: calc(100vh - 110px);
+  }
+}
+
+@media (max-width: 992px) {
+  .home-view {
+    min-height: calc(100vh - 100px);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-view {
+    min-height: calc(100vh - 90px);
+    align-items: flex-start;
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-view {
+    min-height: calc(100vh - 80px);
+    padding-top: 1rem;
+  }
 }
 </style>

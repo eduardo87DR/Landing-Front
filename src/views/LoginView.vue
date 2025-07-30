@@ -126,6 +126,7 @@ const handleLogin = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 80px;
 }
 
 .login-container {
@@ -136,13 +137,13 @@ const handleLogin = async () => {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
-  margin: 1rem;
 }
 
 .login-image {
   flex: 1;
   position: relative;
   background-color: #1e293b;
+  display: none; 
 }
 
 .login-image img {
@@ -167,7 +168,7 @@ const handleLogin = async () => {
 }
 
 .image-overlay h2 {
-  font-size: 1.8rem;
+  font-size: clamp(1.5rem, 2.5vw, 1.8rem);
   font-weight: 700;
   margin-bottom: 1rem;
   background: linear-gradient(90deg, #ffffff, #a5b4fc);
@@ -177,7 +178,7 @@ const handleLogin = async () => {
 }
 
 .image-overlay p {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 2rem;
   line-height: 1.6;
@@ -194,7 +195,7 @@ const handleLogin = async () => {
   padding-left: 1.75rem;
   margin-bottom: 1rem;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 1.5vw, 0.95rem);
 }
 
 .features-list li:before {
@@ -211,7 +212,7 @@ const handleLogin = async () => {
 .login-card {
   width: 100%;
   max-width: 450px;
-  padding: 3rem 2.5rem;
+  padding: 2rem;
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(8px);
   display: flex;
@@ -220,22 +221,23 @@ const handleLogin = async () => {
 }
 
 .login-header {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .login-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin: 0 auto 1rem;
   color: #818cf8;
   background: rgba(129, 140, 248, 0.1);
-  padding: 0.75rem;
+  padding: 0.5rem;
   border-radius: 50%;
   border: 2px solid rgba(129, 140, 248, 0.2);
 }
 
 .login-title {
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
   font-weight: 700;
   color: white;
   margin-bottom: 0.5rem;
@@ -246,14 +248,14 @@ const handleLogin = async () => {
 }
 
 .subtitle {
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
   color: rgba(255, 255, 255, 0.7);
   margin-bottom: 0;
   font-weight: 400;
 }
 
 .form-group {
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   text-align: left;
 }
 
@@ -261,15 +263,15 @@ const handleLogin = async () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
 }
 
 .label-icon {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1rem;
+  height: 1rem;
   color: #818cf8;
 }
 
@@ -279,10 +281,10 @@ const handleLogin = async () => {
 
 .input-wrapper input {
   width: 100%;
-  padding: 0.85rem 3rem 0.85rem 1rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 2vw, 0.95rem);
   background: rgba(30, 41, 59, 0.5);
   color: white;
   transition: all 0.3s ease;
@@ -299,8 +301,8 @@ const handleLogin = async () => {
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.1rem;
+  height: 1.1rem;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   transition: color 0.2s ease;
@@ -311,12 +313,12 @@ const handleLogin = async () => {
 }
 
 .login-button {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   width: 100%;
   background: linear-gradient(90deg, #6366f1, #8b5cf6);
   border: none;
-  padding: 1rem 0;
-  font-size: 1rem;
+  padding: 0.9rem 0;
+  font-size: clamp(0.95rem, 2vw, 1rem);
   font-weight: 600;
   color: white;
   border-radius: 8px;
@@ -339,8 +341,8 @@ const handleLogin = async () => {
 }
 
 .loading-spinner {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.1rem;
+  height: 1.1rem;
   animation: spin 1s linear infinite;
   color: white;
 }
@@ -352,65 +354,88 @@ const handleLogin = async () => {
 }
 
 .error-message {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   color: #f87171;
   font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
-  padding: 0.75rem;
+  font-size: clamp(0.85rem, 2vw, 0.9rem);
+  padding: 0.6rem;
   background: rgba(239, 68, 68, 0.1);
   border-radius: 6px;
 }
 
 .error-icon {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1rem;
+  height: 1rem;
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
+/* Media Queries para responsividad */
+@media (min-width: 768px) {
   .login-container {
-    flex-direction: column;
-    min-height: auto;
+    flex-direction: row;
+    min-height: 600px;
   }
   
   .login-image {
-    display: none;
+    display: block;
   }
   
   .login-card {
-    max-width: 100%;
-    padding: 2.5rem 2rem;
-  }
-  
-  .login-title {
-    font-size: 1.6rem;
+    padding: 2.5rem;
   }
 }
 
 @media (max-width: 480px) {
+  .login-view {
+    padding: 0.5rem;
+  }
+  
   .login-card {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
   }
   
-  .login-title {
-    font-size: 1.4rem;
-  }
-  
-  .form-group label {
-    font-size: 0.9rem;
+  .login-icon {
+    width: 2rem;
+    height: 2rem;
   }
   
   .input-wrapper input {
-    font-size: 0.9rem;
+    padding: 0.7rem 2.5rem 0.7rem 0.8rem;
+  }
+  
+  .input-icon {
+    right: 0.8rem;
+    width: 1rem;
+    height: 1rem;
   }
   
   .login-button {
-    padding: 0.85rem 0;
-    font-size: 0.95rem;
+    padding: 0.8rem 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-card {
+    padding: 1.25rem;
+  }
+  
+  .login-title {
+    font-size: 1.3rem;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+  }
+  
+  .input-wrapper input {
+    font-size: 0.85rem;
+  }
+  
+  .login-button {
+    font-size: 0.9rem;
   }
 }
 </style>

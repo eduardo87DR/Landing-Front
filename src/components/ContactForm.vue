@@ -224,6 +224,7 @@ const closeModal = () => {
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  padding-top: 80px;
 }
 
 .contact-container {
@@ -595,47 +596,99 @@ const closeModal = () => {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .contact-container {
     flex-direction: column;
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
   }
   
   .contact-intro, .contact-form {
-    padding: 2rem;
+    padding: 2rem 1.5rem;
+    width: 100%;
   }
   
   .intro-title, .form-title {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .intro-text, .form-subtitle {
+    font-size: 1rem;
+    text-align: center;
   }
   
   .contact-features {
     grid-template-columns: 1fr;
+    gap : 1.5rem;
+  }
+  .feature-item {
+    padding: 1.2rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 650px) {
   .contact-view {
-    padding: 1rem;
+    padding: 0;
   }
   
   .contact-intro, .contact-form {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
   }
   
   .intro-title, .form-title {
     font-size: 1.4rem;
+    margin-bottom: 1rem;
   }
-  
-  .form {
-    gap: 1.5rem;
+
+  .intro-text, .form-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
   }
   
   .input-field, .textarea-field {
-    padding: 1rem;
+    padding: 1.2rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .form-group label {
+    font-size: 0.75rem;
+    left: 0.6rem;
+  }
+
+  .submit-btn {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .privacy-checkbox label {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .feature-item p {
+    font-size: 0.85rem;
+  }
+  
+}
+
+@media (max-width: 400px) {
+  .input-field, .textarea-field {
+    padding: 1.1rem 0.9rem;
   }
   
   .submit-btn {
+    padding: 1.1rem;
+  }
+  
+  .modal-container {
+    width: 95%;
     padding: 1rem;
+  }
+  
+  .modal-body p {
+    font-size: 1rem;
   }
 }
 </style>

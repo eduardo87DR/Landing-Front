@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- Header ocupa todo el ancho visual -->
     <div class="full-width">
       <Header />
     </div>
@@ -13,7 +12,6 @@
       </div>
     </main>
 
-    <!-- Footer ocupa todo el ancho visual -->
     <div class="full-width">
       <Footer />
     </div>
@@ -46,10 +44,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  max-width: 100vw;
 }
 
-/* Este clase fuerza que header/footer se expandan al 100vw */
 .full-width {
   width: 100vw;
   position: relative;
@@ -59,48 +55,43 @@ body {
   margin-right: -50vw;
 }
 
-/* El contenido principal sigue centrado */
 .main-content {
   flex: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-wrapper {
   width: 100%;
-  background: inherit;
+  flex: 1;
+  display: flex;
 }
 
 .content-container {
   width: 100%;
   max-width: 1200px;
-  min-width: 320px;
   margin: 0 auto;
-  padding: 1.5rem;
-  box-sizing: border-box;
+  padding: 0;
+  flex: 1;
 }
 
-/* Responsive spacing */
+/* Ajustes responsivos para el contenedor principal */
 @media (max-width: 1200px) {
   .content-container {
-    padding: 1.5rem;
-  }
-}
-
-@media (max-width: 992px) {
-  .content-container {
-    padding: 1.25rem;
+    padding: 0;
   }
 }
 
 @media (max-width: 768px) {
-  .content-container {
-    padding: 1rem;
+  .main-content {
+    padding-top: 50px; /* Ajusta según altura del header */
   }
 }
 
 @media (max-width: 576px) {
-  .content-container {
-    padding: 0.75rem;
+  .main-content {
+    padding-top: 30px; /* Ajusta según altura del header */
   }
 }
 </style>

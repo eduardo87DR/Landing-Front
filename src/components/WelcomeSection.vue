@@ -1,6 +1,6 @@
 <template>
   <section class="digital-solutions" id="soluciones-digitales">
-    <!-- Hero Banner Mejorado -->
+    <!-- Hero Banner con margen superior -->
     <div class="hero-banner">
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <!-- Content Sections con mejor diseño -->
+    <!-- Content Sections -->
     <div class="content-section">
       <div class="section-container">
         <div class="text-content">
@@ -76,13 +76,13 @@
           </div>
         </div>
         <div class="image-content">
-          <img src="https://mx-media.hptiendaenlinea.com/magefan_blog/hero-marketing.jpg" alt="Resultados medibles">
+          <img src="https://blog.coverix.mx/hs-fs/hubfs/Tips%20para%20mejorar%20la%20infraestructura%20de%20TI%20en%20tu%20empresa.jpg?width=980&height=652&name=Tips%20para%20mejorar%20la%20infraestructura%20de%20TI%20en%20tu%20empresa.jpg" alt="Resultados medibles">
           <div class="image-overlay"></div>
         </div>
       </div>
     </div>
 
-    <!-- Services Grid mejorado -->
+    <!-- Services Grid -->
     <div class="services-section">
       <div class="services-header">
         <span class="section-tag center">NUESTROS SERVICIOS</span>
@@ -185,12 +185,14 @@ const services = [
   margin: 0 auto;
   color: white;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding-top: 100px; 
 }
 
-/* Hero Banner Mejorado */
 .hero-banner {
   position: relative;
-  height: 600px;
+  height: 80vh;
+  min-height: 500px;
+  max-height: 800px;
   background-image: url('https://static.mercadonegro.pe/wp-content/uploads/2024/12/12115227/Marketing-digital-2025-1.jpg');
   background-size: cover;
   background-position: center;
@@ -200,7 +202,6 @@ const services = [
   text-align: left;
   margin-bottom: 5rem;
   overflow: hidden;
-  border-radius: 0 0 16px 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -216,9 +217,10 @@ const services = [
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 0 4rem;
+  padding: 0 2rem;
   max-width: 1400px;
   width: 100%;
+  margin-top: 60px; /* Ajuste para el header */
 }
 
 .hero-text {
@@ -226,7 +228,7 @@ const services = [
 }
 
 .hero-banner h1 {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2rem, 5vw, 3.5rem);
   margin-bottom: 1.5rem;
   font-weight: 800;
   line-height: 1.1;
@@ -254,7 +256,7 @@ const services = [
 }
 
 .hero-subtitle {
-  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
   line-height: 1.6;
   opacity: 0.9;
   max-width: 600px;
@@ -265,6 +267,7 @@ const services = [
   display: flex;
   gap: 1.5rem;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 button {
@@ -275,6 +278,7 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
+  white-space: nowrap;
 }
 
 .cta-primary {
@@ -300,9 +304,8 @@ button {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Content Sections mejoradas */
 .content-section {
-  padding: 6rem 0;
+  padding: 4rem 0;
 }
 
 .alt-bg {
@@ -317,7 +320,7 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-  gap: 5rem;
+  gap: 4rem;
 }
 
 .reverse {
@@ -326,11 +329,13 @@ button {
 
 .text-content {
   flex: 1;
+  min-width: 300px;
+  padding: 0 1.5rem;
 }
 
 .section-tag {
   display: inline-block;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -348,7 +353,7 @@ button {
 }
 
 .text-content h2 {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
   margin-bottom: 1.5rem;
   color: white;
   font-weight: 700;
@@ -356,7 +361,7 @@ button {
 }
 
 .text-content p {
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
   line-height: 1.7;
   opacity: 0.9;
   margin-bottom: 2rem;
@@ -373,7 +378,7 @@ button {
   margin-bottom: 0.8rem;
   display: flex;
   align-items: center;
-  font-size: 1.05rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
 }
 
 .list-icon {
@@ -381,12 +386,14 @@ button {
   height: 1.2rem;
   color: #818cf8;
   margin-right: 0.7rem;
+  flex-shrink: 0;
 }
 
 .stats-container {
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .stat-item {
@@ -395,7 +402,7 @@ button {
 }
 
 .stat-number {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 5vw, 2.5rem);
   font-weight: 700;
   background: linear-gradient(90deg, #6366f1, #a855f7);
   -webkit-background-clip: text;
@@ -412,7 +419,7 @@ button {
 
 .tech-stack {
   display: flex;
-  gap: 1rem;
+  gap: 0.8rem;
   margin-top: 1.5rem;
   flex-wrap: wrap;
 }
@@ -422,9 +429,10 @@ button {
   color: #a5b4fc;
   padding: 0.5rem 1rem;
   border-radius: 50px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   border: 1px solid rgba(129, 140, 248, 0.2);
+  white-space: nowrap;
 }
 
 .image-content {
@@ -433,6 +441,7 @@ button {
   overflow: hidden;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
   position: relative;
+  min-height: 300px;
 }
 
 .image-overlay {
@@ -450,27 +459,26 @@ button {
   object-fit: cover;
   display: block;
   transition: transform 0.5s ease;
-  min-height: 400px;
 }
 
 .image-content:hover img {
   transform: scale(1.05);
 }
 
-/* Services Section mejorada */
 .services-section {
-  padding: 6rem 2rem;
+  padding: 4rem 1rem;
   text-align: center;
   position: relative;
 }
 
 .services-header {
   max-width: 800px;
-  margin: 0 auto 4rem;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
 }
 
 .services-header h2 {
-  font-size: 2.8rem;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
   margin-bottom: 1.5rem;
   color: white;
   font-weight: 700;
@@ -478,31 +486,32 @@ button {
 }
 
 .services-subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
   opacity: 0.9;
   color: #e2e8f0;
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .feature-item {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
   transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
   text-align: center;
-  min-height: 280px;
+  min-height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -526,21 +535,21 @@ button {
 }
 
 .feature-item:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.15);
 }
 
 .feature-icon-container {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   background: rgba(129, 140, 248, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   transition: all 0.3s ease;
 }
 
@@ -550,8 +559,8 @@ button {
 }
 
 .feature-icon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
   color: #a5b4fc;
   transition: all 0.3s ease;
 }
@@ -561,17 +570,17 @@ button {
 }
 
 .feature-item h3 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin-bottom: 1rem;
   color: white;
   font-weight: 600;
 }
 
 .feature-item p {
-  font-size: 1.05rem;
+  font-size: 1rem;
   opacity: 0.85;
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   color: #e2e8f0;
 }
 
@@ -585,6 +594,7 @@ button {
   transition: all 0.3s ease;
   color: #a5b4fc;
   font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .feature-item:hover .feature-hover-content {
@@ -593,14 +603,91 @@ button {
 }
 
 .feature-hover-indicator {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.1rem;
+  height: 1.1rem;
   margin-left: 0.5rem;
   transition: all 0.3s ease;
 }
 
 .feature-item:hover .feature-hover-indicator {
   transform: translateX(5px);
+}
+
+.digital-solutions,
+.section-container,
+.hero-content,
+.services-header,
+.features-grid {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, p, .hero-subtitle, .services-subtitle {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 420px) {
+  .hero-banner {
+    min-height: 320px;
+    padding: 0;
+  }
+  .hero-content {
+    padding: 0 0.5rem;
+  }
+  .section-container {
+    padding: 0 0.5rem;
+    gap: 1.2rem;
+  }
+  .text-content h2,
+  .services-header h2 {
+    font-size: 1.2rem;
+  }
+  .text-content p,
+  .services-subtitle,
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+  .feature-item {
+    padding: 1rem 0.5rem;
+    min-height: unset;
+  }
+  .feature-item h3 {
+    font-size: 1rem;
+  }
+  .feature-item p {
+    font-size: 0.9rem;
+  }
+  .tech-tag {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+  }
+  button,
+  .cta-primary,
+  .cta-secondary {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.8rem;
+    margin: 0;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+  .image-content {
+    min-height: 150px;
+  }
+}
+
+button,
+.cta-primary,
+.cta-secondary {
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 /* Responsive Styles */
@@ -610,18 +697,29 @@ button {
   }
   
   .hero-banner {
-    height: 500px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-banner {
-    height: 450px;
-    text-align: center;
+    height: 70vh;
   }
   
   .hero-content {
     padding: 0 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .digital-solutions {
+    padding-top: 70px;
+  }
+  
+  .hero-banner {
+    height: 60vh;
+    min-height: 400px;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .hero-content {
+    text-align: center;
+    margin-top: 40px;
   }
   
   .hero-text {
@@ -634,25 +732,40 @@ button {
   
   .section-container {
     flex-direction: column;
-    gap: 3rem;
+    gap: 2.5rem;
+    padding: 0 1.5rem;
   }
   
   .reverse {
     flex-direction: column;
   }
   
-  .image-content img {
-    min-height: 300px;
+  .text-content {
+    text-align: center;
   }
   
-  .features-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  .stats-container {
+    justify-content: center;
+  }
+  
+  .image-content {
+    width: 100%;
+    min-height: 250px;
+  }
+  
+  .services-section {
+    padding: 3rem 0.5rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .hero-banner {
-    height: 400px;
+    height: 70vh;
+    min-height: 450px;
+  }
+  
+  .hero-content {
+    padding: 0 1.5rem;
   }
   
   .hero-cta {
@@ -660,13 +773,50 @@ button {
     gap: 1rem;
   }
   
-  .content-section {
-    padding: 4rem 0;
+  button {
+    width: 100%;
+    padding: 0.9rem;
   }
   
-  .stats-container {
-    flex-direction: column;
-    gap: 1.5rem;
+  .content-section {
+    padding: 3rem 0;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+  
+  .feature-item {
+    min-height: 220px;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-banner h1 {
+    font-size: 1.3rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .section-container {
+    padding: 0 1rem;
+  }
+  
+  .tech-tag {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .feature-item h3 {
+    font-size: 1.2rem;
+  }
+  
+  .feature-item p {
+    font-size: 0.95rem;
   }
 }
 </style>
