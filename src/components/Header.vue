@@ -2,7 +2,7 @@
   <header class="header">
     <div class="header-content">
       <div class="logo">
-        <span class="logo-name">Nexus</span>
+        <span class="logo-name">Morphix</span>
         <span class="logo-suffix">Soluciones Digitales</span>
       </div>
 
@@ -207,7 +207,6 @@ const toggleMenu = () => {
   height: 1.8rem;
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
   .header-content {
     padding: 0.8rem 1.5rem;

@@ -19,7 +19,6 @@ import WelcomeSection from '../components/WelcomeSection.vue'
   align-items: center;
 }
 
-/* Media Queries para responsividad */
 @media (max-width: 1200px) {
   .home-view {
     min-height: calc(100vh - 110px);

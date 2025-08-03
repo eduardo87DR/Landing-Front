@@ -14,7 +14,7 @@
           <div class="modal-body">
             <div class="privacy-content">
               <h4>Responsable del tratamiento de tus datos personales</h4>
-              <p>Nexus es responsable del tratamiento de los datos personales que nos proporciones.</p>
+              <p>Morphix es responsable del tratamiento de los datos personales que nos proporciones.</p>
 
               <h4>Finalidad del tratamiento</h4>
               <p>Los datos personales que recabamos serán utilizados para las siguientes finalidades:</p>
@@ -196,7 +196,6 @@ defineEmits(['update:modelValue'])
   box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
 }
 
-/* Transiciones del modal */
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
@@ -207,7 +206,6 @@ defineEmits(['update:modelValue'])
   transform: translateY(-20px);
 }
 
-/* Responsive para modal */
 @media (max-width: 768px) {
   .modal-container {
     width: 95%;

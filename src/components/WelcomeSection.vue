@@ -1,6 +1,5 @@
 <template>
   <section class="digital-solutions" id="soluciones-digitales">
-    <!-- Hero Banner con margen superior -->
     <div class="hero-banner">
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -10,7 +9,7 @@
             Soluciones tecnológicas inteligentes que impulsan el crecimiento sostenible de tu negocio
           </p>
           <div class="hero-cta">
-            <button class="cta-primary">Explora nuestras soluciones</button>
+            <button class="cta-primary" @click="scrollToServices">Explora nuestras soluciones</button>
             <router-link to="/form">
               <button class="cta-secondary">Contacta a un experto</button>
             </router-link>
@@ -19,7 +18,6 @@
       </div>
     </div>
 
-    <!-- Content Sections -->
     <div class="content-section">
       <div class="section-container">
         <div class="text-content">
@@ -82,8 +80,7 @@
       </div>
     </div>
 
-    <!-- Services Grid -->
-    <div class="services-section">
+    <div class="services-section" id="nuestros-servicios">
       <div class="services-header">
         <span class="section-tag center">NUESTROS SERVICIOS</span>
         <h2>Soluciones Especializadas para Necesidades Únicas</h2>
@@ -176,6 +173,17 @@ const services = [
     icon: ChartBarIcon
   }
 ]
+
+const scrollToServices = () => {
+  const servicesSection = document.getElementById('nuestros-servicios');
+  if (servicesSection) {
+    servicesSection.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start' 
+    });
+  }
+};
+
 </script>
 
 <style scoped>
@@ -203,6 +211,7 @@ const services = [
   margin-bottom: 5rem;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
 }
 
 .hero-overlay {
@@ -220,7 +229,7 @@ const services = [
   padding: 0 2rem;
   max-width: 1400px;
   width: 100%;
-  margin-top: 60px; /* Ajuste para el header */
+  margin-top: 60px; 
 }
 
 .hero-text {
@@ -442,6 +451,7 @@ button {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
   position: relative;
   min-height: 300px;
+  height: 100%;
 }
 
 .image-overlay {
@@ -457,6 +467,7 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  flex: 1 1 auto;
   display: block;
   transition: transform 0.5s ease;
 }
@@ -493,7 +504,7 @@ button {
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -627,7 +638,6 @@ h1, h2, h3, p, .hero-subtitle, .services-subtitle {
   overflow-wrap: break-word;
 }
 
-/* Ajustes para pantallas muy pequeñas */
 @media (max-width: 420px) {
   .hero-banner {
     min-height: 320px;
@@ -690,7 +700,6 @@ button,
   overflow-wrap: break-word;
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
   .section-container {
     gap: 3rem;
@@ -794,29 +803,46 @@ button,
 }
 
 @media (max-width: 400px) {
+  .hero-banner {
+    min-height: 320px;
+    max-height: 320px;
+  }
+
+  .hero-content {
+    margin-top: 3px;
+    padding: 0 0.8rem;
+  }
+
+
   .hero-banner h1 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
   }
-  
+
   .hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-cta {
+    margin-top: 0.8rem;
+    gap: 0.8rem;
+  }
+
+  button {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.85rem;
   }
   
-  .section-container {
-    padding: 0 1rem;
+  .feature-item {
+    padding: 0.4rem;
+    max-height: 160px;
   }
-  
-  .tech-tag {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
+
+   .image-content {
+    min-height: 150px;
+    height: 200px; 
   }
-  
-  .feature-item h3 {
-    font-size: 1.2rem;
-  }
-  
-  .feature-item p {
-    font-size: 0.95rem;
-  }
+
 }
 </style>

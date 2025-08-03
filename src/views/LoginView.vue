@@ -4,7 +4,7 @@
       <div class="login-image">
         <img src="https://ciberseguridadtips.com/wp-content/uploads/2022/07/tipos-de-seguridad-informatica-2.jpg" alt="Seguridad informática" />
         <div class="image-overlay">
-          <h2>Panel de Administración Nexus</h2>
+          <h2>Panel de Administración Morphix</h2>
           <p>Gestiona, monitorea y controla todos los aspectos del sistema</p>
           <ul class="features-list">
             <li>Administra leads y mensajes de usuarios</li>
@@ -372,7 +372,6 @@ const handleLogin = async () => {
   height: 1rem;
 }
 
-/* Media Queries para responsividad */
 @media (min-width: 768px) {
   .login-container {
     flex-direction: row;
@@ -417,25 +416,87 @@ const handleLogin = async () => {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 400px) {
+  .login-view {
+    padding: 0;
+    padding-top: 80px;
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .login-container {
+    width: 100%;
+    min-height: auto;
+    border-radius: 16px;
+    box-shadow: none;
+    flex-direction: column;
+    max-width: 100%;
+    height: auto;
+    
+  }
+
   .login-card {
-    padding: 1.25rem;
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 1.25rem;
+    border-radius: 0;
+    margin: 0 auto;
   }
-  
+
+  .login-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .login-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-bottom: 0.8rem;
+  }
+
   .login-title {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
   }
-  
-  .form-group label {
-    font-size: 0.8rem;
-  }
-  
-  .input-wrapper input {
+
+  .subtitle {
     font-size: 0.85rem;
   }
-  
-  .login-button {
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .input-wrapper input {
+    padding: 0.8rem 2.2rem 0.8rem 0.9rem;
     font-size: 0.9rem;
+  }
+
+  .input-icon {
+    right: 0.8rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .login-button {
+    padding: 0.85rem 0;
+    font-size: 0.95rem;
+  }
+
+
+  @media (max-width: 350px) {
+    .login-card {
+      min-width: 300px;
+      padding: 1.5rem 1rem;
+    }
+    
+    .login-title {
+      font-size: 1.3rem;
+    }
+    
+    .input-wrapper input {
+      font-size: 0.85rem;
+    }
   }
 }
 </style>

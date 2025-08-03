@@ -76,7 +76,6 @@ body {
   flex: 1;
 }
 
-/* Ajustes responsivos para el contenedor principal */
 @media (max-width: 1200px) {
   .content-container {
     padding: 0;
@@ -85,13 +84,14 @@ body {
 
 @media (max-width: 768px) {
   .main-content {
-    padding-top: 50px; /* Ajusta según altura del header */
+    padding-top: 50px; 
   }
 }
 
 @media (max-width: 576px) {
   .main-content {
-    padding-top: 30px; /* Ajusta según altura del header */
+    padding-top: 20px; 
   }
 }
+
 </style>

@@ -3,11 +3,11 @@
     <div class="footer-content">
       <div class="footer-brand">
         <CpuChipIcon class="brand-icon" />
-        <span class="brand-name">Nexus</span>
+        <span class="brand-name">Morphix</span>
         <span class="brand-suffix">Digital Solutions</span>
       </div>
       <p class="copyright">
-        <span>&copy; 2025 Nexus Soluciones Digitales. Todos los derechos reservados.</span>
+        <span>&copy; 2025 Morphix Soluciones Digitales. Todos los derechos reservados.</span>
         <span class="copyright-icons">
           <ShieldCheckIcon class="icon" />
           <LockClosedIcon class="icon" />
@@ -94,7 +94,6 @@ import { CpuChipIcon, ShieldCheckIcon, LockClosedIcon } from '@heroicons/vue/24/
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
   .footer-content {
     padding: 0 1.5rem;

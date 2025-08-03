@@ -132,7 +132,6 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import { fetchLeads } from '@/services/formularioService'
 
-// Definición de tipos
 type LeadEstado = 'nuevo' | 'contactado' | 'descartado'
 type Lead = {
   id: string
@@ -165,7 +164,6 @@ const estadoLabels: Record<LeadEstado, string> = {
 const currentPage = ref(1)
 const pageSize = 5
 
-// Inicializa un lead con valores por defecto
 function initializeLead(lead: any): Lead {
   const savedLead = localStorage.getItem(`lead_${lead.id}`)
   const savedData = savedLead ? JSON.parse(savedLead) : {}
@@ -179,13 +177,11 @@ function initializeLead(lead: any): Lead {
   }
 }
 
-// Guardar localmente el estado
 async function saveLeadState(lead: Lead) {
   savingState.value = true
   const { id, leido, importante, estado } = lead
   localStorage.setItem(`lead_${id}`, JSON.stringify({ leido, importante, estado }))
   
-  // Pequeño delay para que se note la animación
   await new Promise(resolve => setTimeout(resolve, 300))
   savingState.value = false
 }
@@ -263,7 +259,6 @@ async function markAsRead(lead: Lead) {
 }
 
 async function updateLeadStatus(lead: Lead) {
-  // Validación adicional por si acaso
   if (!['nuevo', 'contactado', 'descartado'].includes(lead.estado!)) {
     lead.estado = 'nuevo'
   }
@@ -288,7 +283,6 @@ onMounted(async () => {
   }
 })
 
-// Watcher para cambios en los leads
 watch(leads, (newLeads) => {
   newLeads.forEach(lead => {
     if (lead.id) {
@@ -614,7 +608,6 @@ watch(leads, (newLeads) => {
   color: white;
 }
 
-/* Agrega esto en tu sección de estilos */
 .status-select {
   background: rgba(15, 23, 42, 0.9);
   border: 1px solid rgba(129, 140, 248, 0.3);
@@ -643,14 +636,12 @@ watch(leads, (newLeads) => {
   border-color: #818cf8;
 }
 
-/* Estilo para las opciones del dropdown */
 .status-select option {
   background: rgba(15, 23, 42, 0.95);
   color: white;
   padding: 0.5rem;
 }
 
-/* Para el dropdown de ordenación */
 .sort-controls select {
   background: rgba(15, 23, 42, 0.9);
   border: 1px solid rgba(129, 140, 248, 0.3);
@@ -768,7 +759,6 @@ watch(leads, (newLeads) => {
   cursor: not-allowed;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .dashboard {
     padding: 1.5rem;
@@ -799,30 +789,142 @@ watch(leads, (newLeads) => {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 400px) {
+  .dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    margin-bottom: 2rem;
+  }
+
   .dashboard-header h1 {
-    font-size: 2rem;
-  }
-  
-  .dashboard-header p {
-    font-size: 1rem;
-  }
-  
-  .card h2 {
-    font-size: 1.2rem;
-  }
-  
-  .card p {
     font-size: 1.8rem;
   }
-  
-  .pagination {
+
+  .dashboard-header p {
+    font-size: 0.95rem;
+  }
+
+  .dashboard-stats {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    min-width: 100%;
+    padding: 1.5rem 1rem;
+    border-radius: 10px;
+  }
+
+  .card h2 {
+    font-size: 1.1rem;
+  }
+
+  .card p {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-messages {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+
+  .messages-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .messages-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .sort-controls select {
+    width: 100%;
+  }
+
+  .message-card {
+    padding: 1.25rem;
+  }
+
+  .sender-info {
+    gap: 0.5rem;
+  }
+
+  .sender-info h3 {
+    font-size: 1rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .message-meta {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  .date {
+    font-size: 0.8rem;
+  }
+
+  .contact-info {
+    gap: 1rem;
     flex-direction: column;
   }
-  
+
+  .contact-item {
+    font-size: 0.85rem;
+  }
+
+  .message-text {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .status-select {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+    padding-right: 1.8rem;
+  }
+
+  .action-btn {
+    padding: 0.2rem;
+  }
+
+  .pagination {
+    gap: 0.75rem;
+  }
+
   .pagination button {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .message-text p {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .sender-info {
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
+  }
+
+  .contact-item a {
+    display: inline-block;
+    max-width: calc(100% - 30px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
+
 </style>

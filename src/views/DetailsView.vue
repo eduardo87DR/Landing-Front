@@ -538,4 +538,95 @@ onMounted(() => {
     justify-content: center;
   }
 }
+
+@media (max-width: 400px) {
+  .details-section {
+    padding: 1rem 0.5rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .details-container {
+    border-radius: 12px;
+    margin: 0.5rem;
+  }
+
+  .service-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .service-icon {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-title {
+    font-size: 1.5rem;
+  }
+
+  .service-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .service-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding-left: 1rem;
+  }
+
+  .service-description::before {
+    width: 2px;
+  }
+
+  .service-extra {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .features-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .feature-bullet {
+    margin-top: 0.4rem;
+  }
+
+  .service-cta {
+    padding: 0.9rem 1.5rem;
+    font-size: 0.95rem;
+    width: 100%;
+  }
+
+  .cta-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .not-found {
+    padding: 1.5rem 1rem;
+    margin: 0.5rem;
+  }
+
+  .not-found-title {
+    font-size: 1.4rem;
+  }
+
+  .not-found-message {
+    font-size: 0.9rem;
+  }
+
+  .back-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
 </style>

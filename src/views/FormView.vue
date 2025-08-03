@@ -23,7 +23,6 @@
   
 }
 
-/* Media Queries para responsividad */
 @media (max-width: 1200px) {
   .form-wrapper {
     padding: 2rem 1.5rem;

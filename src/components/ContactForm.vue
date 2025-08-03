@@ -40,6 +40,7 @@
               as="input"
               class="input-field"
               validate-on-blur
+              oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')"
             />
             <label>Nombre completo</label>
             <span class="focus-border"></span>
@@ -54,6 +55,7 @@
               as="input"
               class="input-field"
               validate-on-blur
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             />
             <label>Correo electrónico</label>
             <span class="focus-border"></span>
@@ -68,6 +70,7 @@
               as="input"
               class="input-field"
               validate-on-blur
+              oninput="this.value = this.value.replace(/[^\d\s+\-()]/g, '')"
             />
             <label>Teléfono</label>
             <span class="focus-border"></span>
@@ -162,14 +165,29 @@ import * as yup from 'yup'
 
 const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 
-// Esquema de validación con Yup
+// Validaciones en campos del formulario
 const schema = yup.object({
-  nombre_completo: yup.string().required('El nombre es obligatorio'),
-  correo: yup.string().email('Correo inválido').required('El correo es obligatorio'),
-  telefono: yup.string().required('El teléfono es obligatorio'),
-  mensaje: yup.string().required('El mensaje no puede estar vacío'),
-  privacyAccepted: yup.boolean().oneOf([true], 'Debes aceptar el aviso de privacidad'),
-})
+  nombre_completo: yup.string()
+    .required('El nombre es obligatorio')
+    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'El nombre solo debe contener letras y espacios'),
+    
+  correo: yup.string()
+    .email('Correo inválido')
+    .required('El correo es obligatorio')
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Ingresa un correo electrónico válido'),
+    
+  telefono: yup.string()
+    .required('El teléfono es obligatorio')
+    .matches(/^[\d\s+\-()]+$/, 'Solo se permiten números, espacios y los caracteres + - ( )')
+    .min(8, 'El teléfono debe tener al menos 8 caracteres'),
+    
+  mensaje: yup.string()
+    .required('El mensaje no puede estar vacío')
+    .min(10, 'El mensaje debe tener al menos 10 caracteres'),
+    
+  privacyAccepted: yup.boolean()
+    .oneOf([true], 'Debes aceptar el aviso de privacidad')
+});
 
 const privacyAccepted = ref(false);
 const isLoading = ref(false);
@@ -225,6 +243,7 @@ const closeModal = () => {
   align-items: center;
   padding: 2rem;
   padding-top: 80px;
+  
 }
 
 .contact-container {
@@ -489,7 +508,6 @@ const closeModal = () => {
   }
 }
 
-/* Modal styles */
 .modal-mask {
   position: fixed;
   z-index: 9999;
@@ -595,7 +613,6 @@ const closeModal = () => {
   box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .contact-container {
     flex-direction: column;
@@ -674,21 +691,143 @@ const closeModal = () => {
 }
 
 @media (max-width: 400px) {
+  .contact-view {
+    padding: 0;
+  }
+  
+  .contact-container {
+    flex-direction: column;
+    border-radius: 16px;
+
+  }
+  
+  .contact-intro {
+    padding: 1.2rem 0.8rem;
+    background: rgba(16, 31, 54, 0.9);
+  }
+  
+  .intro-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    text-align: center;
+  }
+  
+  .intro-text {
+    font-size: 0.8rem;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    line-height: 1.5;
+  }
+  
+  .contact-features {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  
+  .feature-item {
+    padding: 0.8rem;
+    text-align: center;
+  }
+  
+  .feature-item svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .feature-item h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .feature-item p {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+  
+  .contact-form {
+    padding: 1.2rem 0.8rem;
+  }
+  
+  .form-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .form-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .form {
+    gap: 1.2rem;
+  }
+  
   .input-field, .textarea-field {
-    padding: 1.1rem 0.9rem;
+    padding: 1rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .form-group label {
+    font-size: 0.7rem;
+    left: 0.6rem;
+  }
+  
+  .textarea-field {
+    min-height: 100px;
+  }
+  
+  .privacy-checkbox {
+    margin: 0.5rem 0;
+  }
+  
+  .privacy-checkbox label {
+    font-size: 0.75rem;
   }
   
   .submit-btn {
-    padding: 1.1rem;
-  }
-  
-  .modal-container {
-    width: 95%;
     padding: 1rem;
+    font-size: 0.9rem;
   }
   
-  .modal-body p {
-    font-size: 1rem;
+  .error-message {
+    font-size: 0.7rem;
+  }
+
+  .contact-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem; 
+    margin-top: 1rem;
+    align-items: stretch; 
+  }
+
+  .feature-item {
+    padding: 0.6rem;
+    min-height: 100%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    text-align: center;
+  }
+
+  .feature-item svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 auto 0.4rem; 
+  }
+
+  .feature-item h3 {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+  }
+
+  .feature-item p {
+    font-size: 0.rem;
+    line-height: 1.3;
+    margin-top: auto;
   }
 }
 </style>
